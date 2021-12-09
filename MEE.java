@@ -41,37 +41,45 @@ public MEE (int max){
     /**
 * résultat : vrai ssi cet ensemble est vide
 */
-public boolean estVide (){
-    boolean res = true;
-    int i;
-    while(res && i<this.tabFreq.length){
-        if(this.tabFreq[i]==0){
-            i++;
-        }
-        else{res=false;}
+    public boolean estVide(){
+        return this.nbTotEx==0;
     }
-    return(res);
-}
+
 
     /**
     * pré-requis : 0 <= i < tabFreq.length
     * action : ajoute un exemplaire de i à this
     */
-    public void ajoute (int i) { 
-
-
-
-
-
-
-        
+    public void ajoute (int i){
+        this.tabFreq [i] += 1;
     }
     /**
     * pré-requis : 0 <= i < tabFreq.length
     * action/résultat : retire un exemplaire de i de this s’il en existe,
     * et retourne vrai ssi cette action a pu être effectuée
     */
-    public boolean retire (int i) {}
+    public boolean retire     (int i){
+        if (this.tabFreq [i]>0){
+            this.tabFreq [i] +=1;
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
     * pré-requis : this est non vide
     * action/résultat : retire de this un exemplaire choisi aléatoirement
