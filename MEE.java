@@ -4,7 +4,7 @@ public class MEE {
     private int[] tabFreq; // tabFreq[i] des jetons.
     private int nbTotEx;// nombre total d’exemplaires ou cardinal de la main courante de jetons*
 
-    /**
+    /** Powpow
      * pré-requis : max >= 0
      * action : crée un multi-ensemble vide dont les éléments seront
      * inférieurs à max
