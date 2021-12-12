@@ -2,7 +2,7 @@ public class Case {
 
         private int couleur;
         private char lettre;
-        private boolean status;
+        private boolean recouverte;
         
         
 /**
@@ -10,7 +10,10 @@ public class Case {
 * action : constructeur de Case
 */
 public Case (int uneCouleur){
-    this.couleur= uneCouleur;}
+    this.couleur= uneCouleur;
+    this.lettre=0;
+    this.recouverte=false;
+}
     
     
     /**
@@ -32,15 +35,23 @@ public Case (int uneCouleur){
     public void setLettre (char let){
         this.lettre = let;
     }
-
-    
-    
     /**
     * résultat : vrai ssi la case est recouverte par une lettre
     */
-    public boolean estRecouverte (){}
+    public boolean estRecouverte (){
+        boolean resultat;
+        if(this.recouverte && this.lettre!=0){
+            resultat=true;
+        }
+        else{resultat=false;}
+        return(resultat);
+    }
     public String toString (){
-
-
-    
+        String resultat="";
+        if(this.estRecouverte()){
+           resultat+=this.getLettre();
+        }
+        else{resultat="";}
+        return(resultat);
+    }
 }
