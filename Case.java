@@ -51,7 +51,7 @@ public Case (int uneCouleur){
         if(this.estRecouverte()){
            resultat+=this.getLettre();
         }
-        else{resultat="";}
+        else{resultat+=this.getCouleur();}
         return(resultat);
     }
 }
