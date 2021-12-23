@@ -9,7 +9,7 @@ public class Case {
 * pré-requis : uneCouleur est un entier entre 1 et 5
 * action : constructeur de Case
 */
-public Case (int uneCouleur){
+public Case(int uneCouleur){
     this.couleur= uneCouleur;
     this.lettre=0;
     this.recouverte=false;
@@ -19,26 +19,26 @@ public Case (int uneCouleur){
     /**
     * résultat : la couleur de this, un nombre entre 1 et 5
     */
-    public int getCouleur (){
+    public int getCouleur(){
         return(this.couleur);}
    
         /**
     * pré-requis : cette case est recouverte
     */
-    public char getLettre (){
+    public char getLettre(){
         return this.lettre;}
    
    
     /**
     * pré-requis : let est une lettre majuscule
     */
-    public void setLettre (char let){
+    public void setLettre(char let){
         this.lettre = let;
     }
     /**
     * résultat : vrai ssi la case est recouverte par une lettre
     */
-    public boolean estRecouverte (){
+    public boolean estRecouverte(){
         boolean resultat;
         if(this.recouverte && this.lettre!=0){
             resultat=true;
@@ -46,7 +46,7 @@ public Case (int uneCouleur){
         else{resultat=false;}
         return(resultat);
     }
-    public String toString (){
+    public String toString(){
         String resultat="";
         if(this.estRecouverte()){
            resultat+=this.getLettre();

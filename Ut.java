@@ -154,6 +154,39 @@ public class Ut {
     }
     
 
+	/**
+	 * Check selon la norme ASCII si le parmètre est une 
+	 * @param c
+	 * @return Si paramètre est une Majuscule selon sa valeur ASCII
+	 */
+	public static boolean estUneMajuscule(char c){
+		int carac = c;
+		boolean resultat;
+		if(carac>=65 && carac<=90){
+			resultat=true;
+		} 
+		else{resultat=false;}
+		return(resultat);
+	}
+	public static int majToIndex (char c) {
+		// Prerequis : c est un caractere entre 'A' et 'Z'
+		// Resultat : la valeur 0 pour 'a', 12 pour 'm', 25 pour 'z'...
+		return (int)c - 65;
+		}
+	
+		public static char indexToMaj (int i) {
+		// Prerequis : i est un entier entre 0 et 25 
+		//             (par exemple, indice d'un tableau)
+		// Resultat : la valeur 'A' pour 0, 'M' pour 12, 'Z' pour 25...
+		return (char)(i + 65);
+		}
+
+
+
+
+
+
+
     public static int alphaToIndex (char c) {
 	// Prerequis : c est un caractere entre 'a' et 'z'
 	// Resultat : la valeur 0 pour 'a', 12 pour 'm', 25 pour 'z'...
@@ -163,7 +196,7 @@ public class Ut {
     public static char indexToAlpha (int i) {
 	// Prerequis : i est un entier entre 0 et 25 
 	//             (par exemple, indice d'un tableau)
-	// Resultat : la valeur 'a' pour 0, 'm' pour 12, 'z' pour 25...b
+	// Resultat : la valeur 'a' pour 0, 'm' pour 12, 'z' pour 25...
 	return (char)(i + 97);
     }
 

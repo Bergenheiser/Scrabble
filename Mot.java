@@ -2,13 +2,23 @@ public class Mot {
 
     private String submit;
 /**
- * Je crée un une fonction d'input des variables de lettres, en la forcant
- * à devenir majuscule dans le cas où l'utilisateur n'aurait pas fait attention
- * @return mot choisi
+ * Input du mot choisis, avec verification des 
+ * @return mot choisi, standardisé aux normes de lettres majuscules
  */
     public void ask(){
         String input= Ut.saisirChaine();
-        this.submit= input.toUpperCase();
+        int i=0;
+        boolean standard= true;
+        while(standard && i<input.length()){
+            standard= Ut.estUneMajuscule(input.charAt(i));
+            i++;
+        }
+        if(standard){
+            this.submit = input;
+        }
+        else{
+            System.out.println("Veuillez resaissir le mot en Lettres Majuscules : ");
+            ask();}
     }
 /**
  * Getter pour notre isntance privée de Mot
@@ -16,5 +26,13 @@ public class Mot {
  */
    public String getMot() {
     return this.submit;
+}
+
+
+
+public static void main(String[] args ){
+ Mot hello = new Mot();
+ hello.ask();
+
 }
 }
