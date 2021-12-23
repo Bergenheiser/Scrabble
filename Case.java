@@ -1,5 +1,4 @@
 public class Case {
-
         private int couleur;
         private char lettre;
         private boolean recouverte;
@@ -9,11 +8,11 @@ public class Case {
 * pré-requis : uneCouleur est un entier entre 1 et 5
 * action : constructeur de Case
 */
-public Case(int uneCouleur){
+    public Case(int uneCouleur){
     this.couleur= uneCouleur;
     this.lettre=0;
     this.recouverte=false;
-}
+    }
     
     
     /**

@@ -14,25 +14,18 @@ public class Mot {
             i++;
         }
         if(standard){
+            System.out.println("Mot enregistré avec succès!");
             this.submit = input;
         }
         else{
-            System.out.println("Veuillez resaissir le mot en Lettres Majuscules : ");
+            System.out.println("Veuillez resaissir le mot en toutes lettres majuscules: ");
             ask();}
     }
 /**
- * Getter pour notre isntance privée de Mot
+ * Getter pour notre instance de Mot
  * @return mot
  */
    public String getMot() {
     return this.submit;
-}
-
-
-
-public static void main(String[] args ){
- Mot hello = new Mot();
- hello.ask();
-
 }
 }
