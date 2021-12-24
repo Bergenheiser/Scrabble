@@ -40,21 +40,20 @@ public class Plateau {
     }
 
     public String toString(){
-        String plateauCourant ="   |1 |2 |3 |4 |5 |6 |7 |8 |9 |10|11|12|13|14|15|"+'\n'+"-".repeat(48)+"\n";
+        String plateauCourant ="   |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |"+'\n'+"-".repeat(64)+"\n";
+        char col = 'A';
         for(int i=0;i<g.length;i++){
-            if(i<10){
-            plateauCourant+=(" "+i+" |");}
-            else{plateauCourant+=(i+" |");}
-
+            plateauCourant+=(" "+col+" |");
             for(int j=0;j<g[0].length;j++){
                     if(g[i][j].getCouleur()==1){
-                    plateauCourant+="  |";
+                    plateauCourant+="   |";
                     }
                     else{
-                    plateauCourant+=g[i][j].toString()+" |";}
+                    plateauCourant+=" "+g[i][j].toString()+" |";}
                 }
-        plateauCourant+='\n'+"-".repeat(48)+'\n';
         
+        plateauCourant+='\n'+"-".repeat(64)+'\n';
+        col++;
         }
         return(plateauCourant);
     }
