@@ -1,8 +1,11 @@
 public class Mot {
 
     private String submit;
-/**
- * Input du mot choisis, avec verification des 
+    private int positionXY;
+    private String[] sens ={"h","v"};
+
+
+    /* Input du mot choisis, avec verification des 
  * @return mot choisi, standardisé aux normes de lettres majuscules
  */
     public void ask(){
@@ -21,11 +24,11 @@ public class Mot {
             System.out.println("Veuillez resaissir le mot en toutes lettres majuscules: ");
             ask();}
     }
+
 /**
  * Getter pour notre instance de Mot
  * @return mot
  */
    public String getMot() {
     return this.submit;
-}
 }

@@ -156,7 +156,11 @@ public class MEE {
         }
         return somme;
     }
-
+    
+    public int[] getTabFreq(){
+        return this.tabFreq;
+    }
+    
 
 
     
