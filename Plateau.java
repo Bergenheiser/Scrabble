@@ -74,6 +74,7 @@ public class Plateau {
         }
         return result;
     }
+    //REVOIR LA CONDITION DES JETONS DANS CHEVALETS MAIS NON DEJA PRESENTS SUR LE PLATEAU
 
     /*
      * Méthode de Classe permettant de placer un mot sur le plateau
@@ -84,8 +85,7 @@ public class Plateau {
      */
     public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
         boolean result = false;
-        int endZone;
-        Case depart = g[numLig][numCol];
+        int endZone; // Cordonnée X ou Y selon le sens de la dernière case de zone
         Case casePrecedenteZone;
         Case caseSuivanteZone;
         switch (sens) {
@@ -122,49 +122,59 @@ public class Plateau {
             // Sur un mot horizontal, toutes les lettre partagent le même Y (numLig)
         }
         // Premier placement
-        if (!this.g[8][8].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && endZone >= 8) { // Si
-                                                                                                          // endZone>=8
-                                                                                                          // alors la
-                                                                                                          // case
-                                                                                                          // principale
-                                                                                                          // sera
-                                                                                                          // couverte
-                                                                                                          // par le mot
-                                                                                                          // proposé.
+        if (!this.g[8][8].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && endZone >= 8) {
             result = true;
         }
-        // Placement le reste du jeu 
-        if(!result && endZone<=15 && endZone>=0 && (casePrecedenteZone==null || !casePrecedenteZone.estRecouverte())
-        && (caseSuivanteZone==null || !caseSuivanteZone.estRecouverte()) && dansChevalet(mot,e)) {
-            boolean conditioncasevide;
-            boolean conditioncaseremplie;
-            int i;
-            switch(sens){
+        // Placement le reste du jeu
+        if (!result && endZone <= 15 && endZone >= 0
+                && (casePrecedenteZone == null || !casePrecedenteZone.estRecouverte())
+                && (caseSuivanteZone == null || !caseSuivanteZone.estRecouverte()) 
+                && dansChevalet(mot, e)) {
+            boolean conditioncasevide = false;
+            int nbcasevide = 0;
+            boolean conditioncaseremplie= false;
+            int nbcaseremplie = 0;
+            boolean contrainteIntegrite = false;
+            int indexlettreobservée = 0;
+            switch (sens) {
                 case 'v':
-                i=numLig;
-                j
-                break;
+                    for (int i = numLig; i <= endZone; i++) {
+                        if (g[i][numCol].estRecouverte() && g[i][numCol].getLettre()==mot.charAt(indexlettreobservée)) {
+                            nbcaseremplie++;
+                            indexlettreobservée++;
+                        } else {
+                            nbcasevide++;
+                        }
+                    }
+
+                    break;
+
                 default:
-                i=numCol;
-                break;
-                
-            }
-            while(i<endZone && !conditioncasevide){
-                switch(sens){
-                    case 'v':
-                    conditioncasevide = g[i][numCol].estRecouverte()
-            }
+                    for (int j = numCol; j <= endZone; j++) {
+                        if (g[numLig][j].estRecouverte()&& g[numLig][j].getLettre()==mot.charAt(indexlettreobservée)) {
+                            nbcaseremplie++;
+                            indexlettreobservée++;
+                        } else {
+                            nbcasevide++;
+                        }
+                    }
+                    break;
 
             }
+            if (nbcaseremplie > 0) {
+                conditioncaseremplie = true;
+                contrainteIntegrite=true;
 
+            }
+            if (nbcasevide > 0) {
+                conditioncasevide = true;
+            }
 
+            if(contrainteIntegrite && conditioncasevide && conditioncaseremplie){
+                result=true;
+            }
         }
-        
-        
-    
-
-        
-
+        return result;
     }
 
 }
