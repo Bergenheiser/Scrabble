@@ -32,3 +32,4 @@ public class Mot {
    public String getMot() {
     return this.submit;
 }
+}

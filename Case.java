@@ -33,6 +33,7 @@ public class Case {
     */
     public void setLettre(char let){
         this.lettre = let;
+        this.recouverte=true;
     }
     /**
     * résultat : vrai ssi la case est recouverte par une lettre
