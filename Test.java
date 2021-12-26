@@ -2,7 +2,7 @@ public class Test {
     public static void main(String[] args) {
         Plateau test = new Plateau();
         System.out.println(test.tostring());
-        /*MEE chevalet = new MEE(26);
+        MEE chevalet = new MEE(26);
         Mot tester = new Mot();
         tester.ask();
 
@@ -13,14 +13,9 @@ public class Test {
             chevalet.ajoute(indexalphalettre);
 
         }
-        
-        if (test.g[7][7].estRecouverte()) {
-            System.out.println("case centrale recouverte");
-        }
+        System.out.println(test.placementValide("BONJOUR",1,8,'v', chevalet));
 
-        //System.out.println(test.placementValide("ABC", 0, 8, 'h', chevalet));
-
-    }*/
+    }
     
 }
-}
+

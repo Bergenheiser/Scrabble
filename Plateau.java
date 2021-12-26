@@ -89,6 +89,13 @@ public class Plateau {
         int endZone; // Cordonnée X ou Y selon le sens de la dernière case de zone
         Case casePrecedenteZone;
         Case caseSuivanteZone;
+        boolean conditioncasevide = false;
+        int nbcasevide = 0;
+        boolean conditioncaseremplie = false;
+        int nbcaseremplie = 0;
+        boolean contrainteIntegrite = false;
+        int indexlettreobservée = 0;
+        boolean conditioncasecentrale=false;
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
@@ -101,6 +108,19 @@ public class Plateau {
                     casePrecedenteZone = null;
                 } else {
                     casePrecedenteZone = g[endZone - 1][numCol];
+                }
+                for (int i = numLig; i <= endZone; i++) {
+                    if (g[i][numCol].estRecouverte()
+                            && g[i][numCol].getLettre() == mot.charAt(indexlettreobservée)) {
+                        nbcaseremplie++;
+                        indexlettreobservée++;
+                    } else {
+                        nbcasevide++;
+                    }
+                    if(g[i][numCol]==g[7][7]){
+                        conditioncasecentrale=true;
+
+                    } else{conditioncasecentrale=false;}
                 }
                 break;
 
@@ -119,62 +139,43 @@ public class Plateau {
                 } else {
                     casePrecedenteZone = g[numLig][numCol - 1];
                 }
+                for (int j = numCol; j <= endZone; j++) {
+                    if (g[numLig][j].estRecouverte()
+                            && g[numLig][j].getLettre() == mot.charAt(indexlettreobservée)) {
+                        nbcaseremplie++;
+                        indexlettreobservée++;
+                    } else {
+                        nbcasevide++;
+                    }
+                    if(g[numLig][j]==g[7][7]){
+                        conditioncasecentrale=true;
+
+                    } else{conditioncasecentrale=false;}
+                }
                 break;
             default:
                 throw new IllegalStateException("Sens incorrect" + sens);
-            // Sur un mot horizontal, toutes les lettre partagent le même Y (numLig)
+        }
+        if (nbcaseremplie > 0 && nbcasevide > 0 ) {
+            conditioncaseremplie = true;
+            contrainteIntegrite = true;
+            conditioncasevide = true;
+
         }
         // Premier placement
-        if (!this.g[7][7].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && endZone >= 7) {
+        if (!this.g[7][7].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && conditioncasecentrale) //revoir endZone
+        {
             result = true;
         } 
         else {
-            // Placement le reste du jeu
+        // Placement le reste du jeu
             if (this.g[7][7].estRecouverte() && result == false && endZone <= 14 && endZone >= 0
                     && (casePrecedenteZone == null || !casePrecedenteZone.estRecouverte())
                     && (caseSuivanteZone == null || !caseSuivanteZone.estRecouverte())
-                    && dansChevalet(mot, e)) {
-                boolean conditioncasevide = false;
-                int nbcasevide = 0;
-                boolean conditioncaseremplie = false;
-                int nbcaseremplie = 0;
-                boolean contrainteIntegrite = false;
-                int indexlettreobservée = 0;
-                switch (sens) {
-                    case 'v':
-                        for (int i = numLig; i <= endZone; i++) {
-                            if (g[i][numCol].estRecouverte()
-                                    && g[i][numCol].getLettre() == mot.charAt(indexlettreobservée)) {
-                                nbcaseremplie++;
-                                indexlettreobservée++;
-                            } else {
-                                nbcasevide++;
-                            }
-                        }
-                        break;
-
-                    case 'h':
-                        for (int j = numCol; j <= endZone; j++) {
-                            if (g[numLig][j].estRecouverte()
-                                    && g[numLig][j].getLettre() == mot.charAt(indexlettreobservée)) {
-                                nbcaseremplie++;
-                                indexlettreobservée++;
-                            } else {
-                                nbcasevide++;
-                            }
-                        }
-
-                }
-                if (nbcaseremplie > 0 && nbcasevide > 0 ) {
-                    conditioncaseremplie = true;
-                    contrainteIntegrite = true;
-                    conditioncasevide = true;
-
-                }
-                if (contrainteIntegrite && conditioncasevide && conditioncaseremplie) {
+                    && dansChevalet(mot, e) && contrainteIntegrite && conditioncasevide && conditioncaseremplie) {
                     result = true;
                 }
-            } else{result=false;}
+            else{result=false;}
         }
         return result;
     }
