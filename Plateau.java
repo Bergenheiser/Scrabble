@@ -86,16 +86,17 @@ public class Plateau {
      */
     public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
         boolean result = false;
-        int endZone; // Cordonnée X ou Y selon le sens de la dernière case de zone
+        int endZone; // Cordonnée X ou Y (selon le sens) de la dernière case de zone
         Case casePrecedenteZone;
         Case caseSuivanteZone;
-        boolean conditioncasevide = false;
-        int nbcasevide = 0;
-        boolean conditioncaseremplie = false;
-        int nbcaseremplie = 0;
+        boolean conditionCaseVide = false;
+        int nbCaseVide = 0;
+        boolean conditionCaseRemplie = false;
+        int nbcaseRemplie = 0;
         boolean contrainteIntegrite = false;
-        int indexlettreobservée = 0;
-        boolean conditioncasecentrale=false;
+        int indexLettreObservée = 0;
+        boolean conditionCaseCentrale=false;
+        int caseCentralePresente=0;
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
@@ -109,19 +110,21 @@ public class Plateau {
                 } else {
                     casePrecedenteZone = g[endZone - 1][numCol];
                 }
+                if(endZone<=14){
                 for (int i = numLig; i <= endZone; i++) {
                     if (g[i][numCol].estRecouverte()
-                            && g[i][numCol].getLettre() == mot.charAt(indexlettreobservée)) {
-                        nbcaseremplie++;
-                        indexlettreobservée++;
+                            && g[i][numCol].getLettre() == mot.charAt(indexLettreObservée)) {
+                        nbcaseRemplie++;
+                        indexLettreObservée++;
                     } else {
-                        nbcasevide++;
+                        nbCaseVide++;
                     }
                     if(g[i][numCol]==g[7][7]){
-                        conditioncasecentrale=true;
-
-                    } else{conditioncasecentrale=false;}
+                        caseCentralePresente++;
+                    }
                 }
+                }
+                else{System.out.println("---Débordement de plateau---");} //Retour utilisateur, préférable indexOutOfBound qui pourrait parraître être un problème de la méthode et pas de l'input.
                 break;
 
             // Sur un mot vertical les Coordonées X (numCol) de ses lettres sont identiques.
@@ -139,31 +142,30 @@ public class Plateau {
                 } else {
                     casePrecedenteZone = g[numLig][numCol - 1];
                 }
+                if(endZone<=14){
                 for (int j = numCol; j <= endZone; j++) {
                     if (g[numLig][j].estRecouverte()
-                            && g[numLig][j].getLettre() == mot.charAt(indexlettreobservée)) {
-                        nbcaseremplie++;
-                        indexlettreobservée++;
+                            && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { //contrainteIntegrite
+                        nbcaseRemplie++;
+                        indexLettreObservée++;
                     } else {
-                        nbcasevide++;
+                        nbCaseVide++;
                     }
                     if(g[numLig][j]==g[7][7]){
-                        conditioncasecentrale=true;
-
-                    } else{conditioncasecentrale=false;}
-                }
+                        caseCentralePresente++;
+                    }
+                }}else{System.out.println("---Débordement de plateau---");}
                 break;
             default:
                 throw new IllegalStateException("Sens incorrect" + sens);
         }
-        if (nbcaseremplie > 0 && nbcasevide > 0 ) {
-            conditioncaseremplie = true;
-            contrainteIntegrite = true;
-            conditioncasevide = true;
+        conditionCaseCentrale=(caseCentralePresente>0);
+        conditionCaseRemplie=(nbcaseRemplie>0);
+        contrainteIntegrite=conditionCaseRemplie; //cf. l.148
+        conditionCaseVide=(nbCaseVide>0);
 
-        }
         // Premier placement
-        if (!this.g[7][7].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && conditioncasecentrale) //revoir endZone
+        if (!this.g[7][7].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && conditionCaseCentrale)
         {
             result = true;
         } 
@@ -172,10 +174,11 @@ public class Plateau {
             if (this.g[7][7].estRecouverte() && result == false && endZone <= 14 && endZone >= 0
                     && (casePrecedenteZone == null || !casePrecedenteZone.estRecouverte())
                     && (caseSuivanteZone == null || !caseSuivanteZone.estRecouverte())
-                    && dansChevalet(mot, e) && contrainteIntegrite && conditioncasevide && conditioncaseremplie) {
+                    && dansChevalet(mot, e) && contrainteIntegrite && conditionCaseVide && conditionCaseRemplie) {
                     result = true;
                 }
-            else{result=false;}
+            else{
+                result=false;}
         }
         return result;
     }

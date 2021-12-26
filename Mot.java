@@ -1,9 +1,6 @@
 public class Mot {
 
     private String submit;
-    private int positionXY;
-    private String[] sens ={"h","v"};
-
 
     /* Input du mot choisis, avec verification des 
  * @return mot choisi, standardisé aux normes de lettres majuscules
