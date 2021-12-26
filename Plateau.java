@@ -46,7 +46,7 @@ public class Plateau {
         for (int i = 0; i < g.length; i++) {
             plateauCourant += (" " + col + " |");
             for (int j = 0; j < g[0].length; j++) {
-                if (g[i][j].getCouleur() == 1) {
+                if (g[i][j].getCouleur() == 1 && !g[i][j].estRecouverte()) {
                     plateauCourant += "   |";
                 } else {
                     plateauCourant += " " + g[i][j].toString() + " |";
@@ -62,12 +62,12 @@ public class Plateau {
     public boolean dansChevalet(String mot, MEE e) {
         int[] chevalet = e.getTabFreq();
         boolean result = true;
-        int index = 0;
-        while (result && index < mot.length()) {
+        int position = 0;
+        while (result && position < mot.length()) {
             // Si la lettre du mot saisi représentée par son indice dans le tabFreq du
             // chevalet à au moins 1 exemplaire
-            if (chevalet[Ut.majToIndex(mot.charAt(index))] != 0) {
-                index++;
+            if (chevalet[Ut.majToIndex(mot.charAt(position))] != 0) {
+                position++;
             } else {
                 result = false;
             }
@@ -95,8 +95,8 @@ public class Plateau {
         int nbcaseRemplie = 0;
         boolean contrainteIntegrite = false;
         int indexLettreObservée = 0;
-        boolean conditionCaseCentrale=false;
-        int caseCentralePresente=0;
+        boolean conditionCaseCentrale = false;
+        int caseCentralePresente = 0;
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
@@ -110,21 +110,23 @@ public class Plateau {
                 } else {
                     casePrecedenteZone = g[endZone - 1][numCol];
                 }
-                if(endZone<=14){
-                for (int i = numLig; i <= endZone; i++) {
-                    if (g[i][numCol].estRecouverte()
-                            && g[i][numCol].getLettre() == mot.charAt(indexLettreObservée)) {
-                        nbcaseRemplie++;
-                        indexLettreObservée++;
-                    } else {
-                        nbCaseVide++;
+                if (endZone <= 14) {
+                    for (int i = numLig; i <= endZone; i++) {
+                        if (g[i][numCol].estRecouverte()
+                                && g[i][numCol].getLettre() == mot.charAt(indexLettreObservée)) {
+                            nbcaseRemplie++;
+                            indexLettreObservée++;
+                        } else {
+                            nbCaseVide++;
+                        }
+                        if (g[i][numCol] == g[7][7]) {
+                            caseCentralePresente++;
+                        }
                     }
-                    if(g[i][numCol]==g[7][7]){
-                        caseCentralePresente++;
-                    }
-                }
-                }
-                else{System.out.println("---Débordement de plateau---");} //Retour utilisateur, préférable indexOutOfBound qui pourrait parraître être un problème de la méthode et pas de l'input.
+                } else {
+                    System.out.println("---Débordement de plateau---");
+                } // Retour utilisateur, préférable indexOutOfBound qui pourrait parraître être un
+                  // problème de la méthode et pas de l'input.
                 break;
 
             // Sur un mot vertical les Coordonées X (numCol) de ses lettres sont identiques.
@@ -142,44 +144,112 @@ public class Plateau {
                 } else {
                     casePrecedenteZone = g[numLig][numCol - 1];
                 }
-                if(endZone<=14){
-                for (int j = numCol; j <= endZone; j++) {
-                    if (g[numLig][j].estRecouverte()
-                            && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { //contrainteIntegrite
-                        nbcaseRemplie++;
-                        indexLettreObservée++;
-                    } else {
-                        nbCaseVide++;
+                if (endZone <= 14) {
+                    for (int j = numCol; j <= endZone; j++) {
+                        if (g[numLig][j].estRecouverte()
+                                && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { // contrainteIntegrite
+                            nbcaseRemplie++;
+                            indexLettreObservée++;
+                        } else {
+                            nbCaseVide++;
+                        }
+                        if (g[numLig][j] == g[7][7]) {
+                            caseCentralePresente++;
+                        }
                     }
-                    if(g[numLig][j]==g[7][7]){
-                        caseCentralePresente++;
-                    }
-                }}else{System.out.println("---Débordement de plateau---");}
+                } else {
+                    System.out.println("---Débordement de plateau---");
+                }
                 break;
             default:
                 throw new IllegalStateException("Sens incorrect" + sens);
         }
-        conditionCaseCentrale=(caseCentralePresente>0);
-        conditionCaseRemplie=(nbcaseRemplie>0);
-        contrainteIntegrite=conditionCaseRemplie; //cf. l.148
-        conditionCaseVide=(nbCaseVide>0);
+        conditionCaseCentrale = (caseCentralePresente > 0);
+        conditionCaseRemplie = (nbcaseRemplie > 0);
+        contrainteIntegrite = conditionCaseRemplie; // cf. l.148
+        conditionCaseVide = (nbCaseVide > 0);
 
         // Premier placement
-        if (!this.g[7][7].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && conditionCaseCentrale)
-        {
+        if (!this.g[7][7].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && conditionCaseCentrale) {
             result = true;
-        } 
-        else {
-        // Placement le reste du jeu
+        } else {
+            // Placement le reste du jeu
             if (this.g[7][7].estRecouverte() && result == false && endZone <= 14 && endZone >= 0
                     && (casePrecedenteZone == null || !casePrecedenteZone.estRecouverte())
                     && (caseSuivanteZone == null || !caseSuivanteZone.estRecouverte())
                     && dansChevalet(mot, e) && contrainteIntegrite && conditionCaseVide && conditionCaseRemplie) {
-                    result = true;
-                }
-            else{
-                result=false;}
+                result = true;
+            } else {
+                result = false;
+                ;
+            }
         }
         return result;
     }
+
+/**
+* pré-requis : le placement de mot sur this à partir de la case
+* (numLig, numCol) dans le sens donné par sens est valide
+* résultat : retourne le nombre de points rapportés par ce placement, le
+* nombre de points de chaque jeton étant donné par le tableau nbPointsJet.
+*/
+    public int nbPointsPlacement(String mot, int numLig, int numCol,char sens, int[] nbPointsJet) {
+        MEE e = Joueur.getChevalet; // à venir completer plus tard
+        boolean conditionPlacementValide = placementValide(mot, numLig, numCol, sens, e);
+        int sumPoints=0;
+        if(conditionPlacementValide){
+        for(int i=0;i<mot.length();i++){
+            int indexPointsJet = Ut.majToIndex(mot.charAt(i));
+            sumPoints+=nbPointsJet[indexPointsJet];
+        }}
+        return(sumPoints);
+        }
+    /**
+* pré-requis : le placement de mot sur this à partir de la case
+* (numLig, numCol) dans le sens donné par sens à l’aide des
+* jetons de e est valide.
+* action/résultat : effectue ce placement et retourne le
+* nombre de jetons retirés de e.
+*/
+    public int place(String mot, int numLig, int numCol, char sens, MEE e){
+        boolean conditionPlacementValide = placementValide(mot, numLig, numCol, sens, e);
+        int resultat=0;
+        if(conditionPlacementValide){
+            switch(sens){
+                case 'v':
+                for(int index=0;index<mot.length();index++){
+                    g[numLig][numCol].setLettre(mot.charAt(index));
+                    if(e.retire(Ut.majToIndex(mot.charAt(index)))){
+                        resultat++;
+                    }
+                    numLig++;
+                }
+                break;
+                case 'h':
+                for(int index=0;index<mot.length();index++){
+                    g[numLig][numCol].setLettre(mot.charAt(index));
+                    if(e.retire(Ut.majToIndex(mot.charAt(index)))){
+                        resultat++;
+                    }
+                    numCol++;
+                }
+                break;
+            }  
+    }
+    return resultat;}
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+

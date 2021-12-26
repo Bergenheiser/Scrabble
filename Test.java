@@ -13,8 +13,9 @@ public class Test {
             chevalet.ajoute(indexalphalettre);
 
         }
-        System.out.println(test.placementValide("BONJOUR",1,7,'v', chevalet));
-        System.out.println(chevalet.toString());
+        System.out.println(test.placementValide("PALU",8,4,'h', chevalet));
+        System.out.println(test.place("PALU", 8, 4, 'h',chevalet));
+        System.out.println(test.tostring());
     }
     
 }
