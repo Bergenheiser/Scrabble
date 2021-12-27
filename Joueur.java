@@ -70,7 +70,7 @@ public class Joueur {
             System.out.println("Merci de ressaisir un choix conforme.");
             joue(p,s,nbPointsJet);}
         
-        return resultat;
+            return resultat;
         }
         /** pré-requis : les éléments de s sont inférieurs à 26
 * et nbPointsJet.length >= 26
@@ -119,20 +119,6 @@ public class Joueur {
             this.score+=50;
         }
     }
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
         /*    System.out.println("Saissisez le nombre de jetons à échanger :");
             int nbJetons = Ut.saisirEntier();
             if(nbJetons<=s.getCardinal()){
