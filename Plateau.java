@@ -187,69 +187,70 @@ public class Plateau {
         return result;
     }
 
-/**
-* pré-requis : le placement de mot sur this à partir de la case
-* (numLig, numCol) dans le sens donné par sens est valide
-* résultat : retourne le nombre de points rapportés par ce placement, le
-* nombre de points de chaque jeton étant donné par le tableau nbPointsJet.
-*/
-    public int nbPointsPlacement(String mot, int numLig, int numCol,char sens, int[] nbPointsJet) {
-        MEE e = Joueur.getChevalet; // à venir completer plus tard
-        boolean conditionPlacementValide = placementValide(mot, numLig, numCol, sens, e);
-        int sumPoints=0;
-        if(conditionPlacementValide){
-        for(int i=0;i<mot.length();i++){
-            int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-            sumPoints+=nbPointsJet[indexPointsJet];
-        }}
-        return(sumPoints);
-        }
     /**
-* pré-requis : le placement de mot sur this à partir de la case
-* (numLig, numCol) dans le sens donné par sens à l’aide des
-* jetons de e est valide.
-* action/résultat : effectue ce placement et retourne le
-* nombre de jetons retirés de e.
-*/
-    public int place(String mot, int numLig, int numCol, char sens, MEE e){
-        boolean conditionPlacementValide = placementValide(mot, numLig, numCol, sens, e);
-        int resultat=0;
-        if(conditionPlacementValide){
-            switch(sens){
-                case 'v':
-                for(int index=0;index<mot.length();index++){
-                    g[numLig][numCol].setLettre(mot.charAt(index));
-                    if(e.retire(Ut.majToIndex(mot.charAt(index)))){
-                        resultat++;
-                    }
+     * pré-requis : le placement de mot sur this à partir de la case
+     * (numLig, numCol) dans le sens donné par sens est valide
+     * résultat : retourne le nombre de points rapportés par ce placement, le
+     * nombre de points de chaque jeton étant donné par le tableau nbPointsJet.
+     */
+    public int nbPointsPlacement(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
+        int sumPoints = 0;
+        switch (sens) {
+            case 'v':
+                for (int i = 0; i < mot.length(); i++) {
+                    int indexPointsJet = Ut.majToIndex(mot.charAt(i));
+                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur(); // Je multiplie la valeur
+                                                                                               // score de la lettre par
+                                                                                               // le code couleur de la
+                                                                                               // case sous-jacente.
                     numLig++;
                 }
                 break;
-                case 'h':
-                for(int index=0;index<mot.length();index++){
-                    g[numLig][numCol].setLettre(mot.charAt(index));
-                    if(e.retire(Ut.majToIndex(mot.charAt(index)))){
-                        resultat++;
-                    }
+            case 'h':
+                for (int i = 0; i < mot.length(); i++) {
+                    int indexPointsJet = Ut.majToIndex(mot.charAt(i));
+                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();
                     numCol++;
+
                 }
                 break;
-            }  
+        }
+        return (sumPoints);
     }
-    return resultat;}
 
-
-
-
-
-
+    /**
+     * pré-requis : le placement de mot sur this à partir de la case
+     * (numLig, numCol) dans le sens donné par sens à l’aide des
+     * jetons de e est valide.
+     * action/résultat : effectue ce placement et retourne le
+     * nombre de jetons retirés de e.
+     */
+    public int place(String mot, int numLig, int numCol, char sens, MEE e) {
+        boolean conditionPlacementValide = placementValide(mot, numLig, numCol, sens, e);
+        int resultat = 0;
+        if (conditionPlacementValide) {
+            switch (sens) {
+                case 'v':
+                    for (int index = 0; index < mot.length(); index++) {
+                        g[numLig][numCol].setLettre(mot.charAt(index));
+                        if (e.retire(Ut.majToIndex(mot.charAt(index)))) {
+                            resultat++;
+                        }
+                        numLig++;
+                    }
+                    break;
+                case 'h':
+                    for (int index = 0; index < mot.length(); index++) {
+                        g[numLig][numCol].setLettre(mot.charAt(index));
+                        if (e.retire(Ut.majToIndex(mot.charAt(index)))) {
+                            resultat++;
+                        }
+                        numCol++;
+                    }
+                    break;
+            }
+        }
+        return resultat;
+    }
 
 }
-
-
-
-
-
-
-
-

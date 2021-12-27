@@ -3,7 +3,14 @@ public class MEE {
 
     private int[] tabFreq; // tabFreq[i] des jetons.
     private int nbTotEx;// nombre total d’exemplaires ou cardinal de la main courante de jetons*
-
+    
+    public int[] getTabFreq(){
+        return this.tabFreq;
+    }
+    public int getCardinal(){
+        return this.nbTotEx;
+    }
+    
     /**
      * pré-requis : max >= 0
      * action : crée un multi-ensemble vide dont les éléments seront
@@ -156,11 +163,6 @@ public class MEE {
         }
         return somme;
     }
-    
-    public int[] getTabFreq(){
-        return this.tabFreq;
-    }
-    
 
 
     
