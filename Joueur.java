@@ -107,9 +107,9 @@ public class Joueur {
 /** pré-requis : cf. joueMot et le placement de mot à partir de la case
 * (numLig, numCol) dans le sens donné par sens est valide
 * action : simule le placement d’un mot de this
-*/
+
 //Les jetons sont placés sur le plateau, leurs exemplaires retirés du chevalet
-//Le score est calculé en multipliant score lettre*code couleur
+//Le score est calculé en multipliant score lettre*code couleur*/
 
     public void joueMotAux(Plateau p, MEE s, int[] nbPointsJet, String mot,
     int numLig, int numCol, char sens) {
