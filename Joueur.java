@@ -119,21 +119,60 @@ public class Joueur {
             this.score+=50;
         }
     }
-        /*    System.out.println("Saissisez le nombre de jetons à échanger :");
-            int nbJetons = Ut.saisirEntier();
-            if(nbJetons<=s.getCardinal()){
-                this.prendJetons(s, nbJetons);
-                resultat=0;
+    /**
+* pré-requis : sac peut contenir des entiers de 0 à 25
+* action : simule l’échange de jetons de ce joueur :
+* - saisie de la suite de lettres du chevalet à échanger
+* en vérifiant que la suite soit correcte
+* - échange de jetons entre le chevalet du joueur et le sac
+* stratégie : appelle les méthodes estCorrectPourEchange et echangeJetonsAux
+*/
+    public void echangeJetons(MEE sac) {
+        String mot = Ut.saisirChaine();
+        if (this.estCorrectPourEchange(mot)){
+            echangeJetonsAux(sac, mot);
+        }
+    }
 
 
 
 
-            Mot mot = new Mot();
-            mot.ask();
-            String motConforme= mot.getMot();
-            
-            p.place(motConforme, numLig, numCol, sens, e)*/
+    /** résultat : vrai ssi les caractères de mot correspondent tous à des
+    * lettres majuscules et l’ensemble de ces caractères est un
+    * sous-ensemble des jetons du chevalet de this
+    */
+    public boolean estCorrectPourEchange (String mot) {
+        boolean resultat=true;
+        int i=0;
+        while(resultat && i<mot.length() && Ut.estUneMajuscule(mot.charAt(i))){
+            if(this.chevalet.contientChar(mot.charAt(i))){
+                i++;
+            }
+            else{resultat=false;} 
+        }
+        return resultat;
+    }
 
+
+
+
+
+    /** pré-requis : sac peut contenir des entiers de 0 à 25 et 
+     *ensJetons est un ensemble de jetons correct pour l’échange
+    * action : simule l’échange de jetons de ensJetons avec des
+    * jetons du sac tirés aléatoirement.
+    */
+    public void echangeJetonsAux(MEE sac, String ensJetons) {
+            for(int i=0; i<ensJetons.length();i++){
+                int index = Ut.majToIndex(ensJetons.charAt(i));
+                //transfert d'un jeton aléatoire du sac vers le chevalet
+                sac.transfereAleat(this.chevalet, 1);
+                //transfert spécifique du jeton du chevalet vers le sac;
+                // Cet ordre à été choisi pour ne pas accidentellement retirer du sac la lettre qu'on souhaite avoir échangé pour une autre
+                this.chevalet.transfere(sac,index);
+            }
+        
+    }
 
         
     

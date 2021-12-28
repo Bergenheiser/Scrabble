@@ -163,6 +163,20 @@ public class MEE {
         }
         return somme;
     }
+    /**Pré-requis:
+     * c est une Letrre Majuscule
+     * @param c
+     * @return vrai ssi l'ensemble contient au moins 1 fois le charactère passé en paramètre
+     */
+    public boolean contientChar(char c){
+        int i= Ut.majToIndex(c);
+        boolean resultat;
+        if(this.tabFreq[i]>0){
+            resultat=true;}
+        
+        else{resultat=false;}
+        return resultat;
+    }
 
 
     
