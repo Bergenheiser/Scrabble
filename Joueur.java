@@ -55,12 +55,15 @@ public class Joueur {
         char userInput= Ut.saisirCaractere();
         switch(userInput){
             case 'N':
+            // Revenir dessus pour la structure du tour passé
             resultat= -1;
             break;
             case 'E':
+            this.echangeJetons(s);
             resultat=0;
             break;
             case'P':
+            joueMot(p, s, nbPointsJet);
             if (this.chevalet.getCardinal()==0){
                 resultat=1;
             }
