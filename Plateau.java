@@ -195,11 +195,29 @@ public class Plateau {
      */
     public int nbPointsPlacement(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
         int sumPoints = 0;
+        int multiplicateurMot = 1;
         switch (sens) {
             case 'v':
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur(); // Je multiplie la valeur
+                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){
+                        switch (g[numCol][numLig].getCouleur()){
+                            case 4:
+                            sumPoints += nbPointsJet[indexPointsJet] * 1;
+                            multiplicateurMot = multiplicateurMot * 2;
+                            break;
+
+                            case 5:
+                            sumPoints += nbPointsJet[indexPointsJet] * 1;
+                            multiplicateurMot = multiplicateurMot * 3;
+                            break;
+
+                        }
+
+                    }
+                    else
+                    {
+                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();} // Je multiplie la valeur
                                                                                                // score de la lettre par
                                                                                                // le code couleur de la
                                                                                                // case sous-jacente.
@@ -209,12 +227,30 @@ public class Plateau {
             case 'h':
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();
+                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){
+                        switch (g[numCol][numLig].getCouleur()){
+                            case 4:
+                            sumPoints += nbPointsJet[indexPointsJet] * 1;
+                            multiplicateurMot = multiplicateurMot * 2;
+                            break;
+
+                            case 5:
+                            sumPoints += nbPointsJet[indexPointsJet] * 1;
+                            multiplicateurMot = multiplicateurMot * 3;
+                            break;
+
+                        }
+
+                    }
+                    else
+                    {
+                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();}
                     numCol++;
 
                 }
                 break;
         }
+        sumPoints = sumPoints *multiplicateurMot;
         return (sumPoints);
     }
 

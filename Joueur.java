@@ -170,7 +170,7 @@ public class Joueur {
                 int index = Ut.majToIndex(ensJetons.charAt(i));
                 //transfert d'un jeton aléatoire du sac vers le chevalet
                 sac.transfereAleat(this.chevalet, 1);
-                //transfert spécifique du jeton du chevalet vers le sac;
+                //transfert spécifique du jeton du chevalet vers le sac
                 // Cet ordre à été choisi pour ne pas accidentellement retirer du sac la lettre qu'on souhaite avoir échangé pour une autre
                 this.chevalet.transfere(sac,index);
             }
