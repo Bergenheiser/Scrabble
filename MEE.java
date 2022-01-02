@@ -139,8 +139,7 @@ public class MEE {
         int resultat=0;
         while(index<=k){
             choix=Ut.randomMinMax(0,(this.tabFreq.length-1));
-            this.transfere(e, choix);
-            if(this.transfere(e, choix)==true){
+            if(this.transfere(e, choix)){
                 resultat++;
             }
             index++;

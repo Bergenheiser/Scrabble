@@ -5,6 +5,8 @@ public class Joueur {
 
     public Joueur(String unNom) {
         this.nom = unNom;
+        this.chevalet = new MEE(26);
+        this.score= 0;
 
     }
 
@@ -42,8 +44,7 @@ public class Joueur {
      * dans la limite de son contenu.
      */
     public void prendJetons(MEE s, int nbJetons) {
-
-        System.out.println(s.transfereAleat(this.chevalet, nbJetons));
+      s.transfereAleat(this.chevalet, nbJetons);
     }
 
     /**
@@ -55,7 +56,7 @@ public class Joueur {
      * et 0 sinon
      */
     public int joue(Plateau p, MEE s, int[] nbPointsJet) {
-        int resultat;
+        int resultat=-2; //  Je suis obligé de l'intialiser qq chose sinon VsCode me bloque.
         Ut.afficher(this.printChevalet());
         System.out.println("N pour passer, E pour échanger, P pour placer : ");
         char userInput = Ut.saisirCaractere();
@@ -69,15 +70,19 @@ public class Joueur {
                 resultat = 0;
                 break;
             case 'P':
-                joueMot(p, s, nbPointsJet);
+                if(joueMot(p, s, nbPointsJet)){
                 if (this.chevalet.estVide()) {
                     resultat = 1;
                 } else {
                     resultat = 0;
-                }
+                }}
+                else{Ut.afficher("Placement invalide du Mot");
+                joueMot(p, s, nbPointsJet);
+                                            }
                 break;
             default:
                 throw new IllegalStateException("Choix incorrect" + userInput);
+        
         }
         return resultat;
     }
@@ -96,6 +101,7 @@ public class Joueur {
      */
     public boolean joueMot(Plateau p, MEE s, int[] nbPointsJet) {
         boolean resultat;
+        Ut.afficher("Mot à placer :");
         Mot motIn = new Mot();
         motIn.ask(); // CAPELODico au boulot!
         String mot = motIn.getMot();
@@ -192,11 +198,12 @@ public class Joueur {
         int[] obs = this.chevalet.getTabFreq();
         for(int i=0;i<obs.length;i++){
             if(obs[i]!=0){
-                for(int j=1;j<=obs[i];j++){
-                    chevalet+=Ut.indexToMaj(i)+"| ";
+                for(int j=1;j==obs[i];j++){
+                    chevalet+=Ut.indexToMaj(i)+" | ";
                 }
             }
         }
+        chevalet+='\n';
         return(chevalet);
     }
 
