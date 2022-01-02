@@ -85,13 +85,30 @@ public class Scrabble {
     }
 
     public String vainqueur(){
+
+        int[] vainqueurs = new int[joueurs.length];
         int idVainqueur=0;
+        String reponse="";
         for(int i = 1; i<(joueurs.length); i++){
+            if(joueurs[idVainqueur].getScore()==joueurs[i].getScore()){
+                vainqueurs[i]=i;
+            }
+            else{
             if(joueurs[idVainqueur].getScore()<joueurs[i].getScore()){
                 idVainqueur=i;
+            }}
+        }
+        if(idVainqueur==vainqueurs[1]){ //Ex-aequo 1ere place enregistré toujours valable après parcours du score de tous les joueurs.
+            reponse+="Ex aequo entre :"+joueurs[idVainqueur].toString()+" et ";
+            for(int i = 1; i < vainqueurs.length; i++){
+                if(vainqueurs[i]!=0){
+                    reponse+=joueurs[vainqueurs[i]].toString()+", ";
+                }
             }
         }
-        return("Le vainqueur est :"+ joueurs[idVainqueur].toString());
+        else{
+        reponse+="Le vainqueur est :"+ joueurs[idVainqueur].toString();}
+        return reponse;
     }
 
 

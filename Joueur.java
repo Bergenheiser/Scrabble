@@ -9,9 +9,9 @@ public class Joueur {
     }
 
     public String toString() {
-        return ("Joueur: " + this.nom + '\n' + "Score: " + this.score);
+        return ("Joueur: " + this.nom + '\n' + "Score: " + this.score+'\n');
     }
-    
+
     public int getScore() {
         return this.score;
     }
@@ -77,7 +77,6 @@ public class Joueur {
                 break;
             default:
                 System.out.println("Merci de ressaisir un choix conforme.");
-                resultat=null;
                 joue(p, s, nbPointsJet);
         }
 
