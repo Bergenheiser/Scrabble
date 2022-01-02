@@ -31,6 +31,7 @@ public class Scrabble {
         while (!conditionArret) {
             this.toString();
             int retourAction = joueurs[this.numJoueur].joue(this.plateau, this.sac, this.nbPointsJet);
+            
             if (retourAction == -1) {
                 //Le joueur à passé son tour
                 passeMain++;

@@ -200,7 +200,7 @@ public class Plateau {
             case 'v':
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){
+                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){ //Mot compte Double ou Triple
                         switch (g[numCol][numLig].getCouleur()){
                             case 4:
                             sumPoints += nbPointsJet[indexPointsJet] * 1;
