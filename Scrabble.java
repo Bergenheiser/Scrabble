@@ -109,19 +109,21 @@ public class Scrabble {
             }
         }
 
-        if (idVainqueur == vainqueurs[1]) { // Ex-aequo 1ere place enregistré toujours valable après parcours du score
-                                            // de tous les joueurs.
+        if (idVainqueur == vainqueurs[1] && vainqueurs[1] != 0) { 
+            // Ex-aequo 1ere place enregistré toujours valable
+            // après parcours du score
+            // de tous les joueurs.
             // Son ou ses informations extraites.
             // Cette méthode couvre le cas (encore plus rare) d'un ex-aequo entre plus de 2
             // joueurs.
-            reponse += "Ex aequo entre :" + joueurs[idVainqueur].toString() + " et ";
+            reponse += "Ex aequo entre :" + '\n' + joueurs[idVainqueur].toString() + " et ";
             for (int i = 1; i < vainqueurs.length; i++) {
                 if (vainqueurs[i] != 0) {
                     reponse += joueurs[vainqueurs[i]].toString() + ", ";
                 }
             }
         } else {
-            reponse += "Le vainqueur est :" + joueurs[idVainqueur].toString();
+            reponse += "Le vainqueur est :" +'\n'+ joueurs[idVainqueur].toString();
         }
         return reponse;
     }

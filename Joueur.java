@@ -151,6 +151,7 @@ public class Joueur {
      * stratégie : appelle les méthodes estCorrectPourEchange et echangeJetonsAux
      */
     public void echangeJetons(MEE sac) {
+        Ut.afficher("Saisissez les lettres à échanger :");
         String mot = Ut.saisirChaine();
         if (this.estCorrectPourEchange(mot)) {
             echangeJetonsAux(sac, mot);
