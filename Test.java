@@ -1,4 +1,4 @@
-public class Test {
+/*public class Test {
     public static void main(String[] args) {
         Plateau test = new Plateau();
         System.out.println(test.toString());
@@ -18,5 +18,5 @@ public class Test {
         System.out.println(test.toString());
     }
     
-}
+*/
 

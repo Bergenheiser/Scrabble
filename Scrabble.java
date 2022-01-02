@@ -84,35 +84,41 @@ public class Scrabble {
         System.out.println(this.vainqueur());
     }
 
-    public String vainqueur(){
+    /**
+     * Méthode d'affichage du/des vainqueur(s) (en cas d'ex-aequo)
+     * retourne (nom et score)
+     */
+    public String vainqueur() {
 
         int[] vainqueurs = new int[joueurs.length];
-        int idVainqueur=0;
-        String reponse="";
-        for(int i = 1; i<(joueurs.length); i++){
-            if(joueurs[idVainqueur].getScore()==joueurs[i].getScore()){
-                vainqueurs[i]=i;
-            }
-            else{
-            if(joueurs[idVainqueur].getScore()<joueurs[i].getScore()){
-                idVainqueur=i;
-            }}
-        }
-        if(idVainqueur==vainqueurs[1]){ //Ex-aequo 1ere place enregistré toujours valable après parcours du score de tous les joueurs.
-            reponse+="Ex aequo entre :"+joueurs[idVainqueur].toString()+" et ";
-            for(int i = 1; i < vainqueurs.length; i++){
-                if(vainqueurs[i]!=0){
-                    reponse+=joueurs[vainqueurs[i]].toString()+", ";
+        int idVainqueur = 0;
+        String reponse = "";
+        for (int i = 1; i < (joueurs.length); i++) {
+            if (joueurs[idVainqueur].getScore() == joueurs[i].getScore()) {
+                vainqueurs[i] = i;
+            } else {
+                if (joueurs[idVainqueur].getScore() < joueurs[i].getScore()) {
+                    idVainqueur = i;
                 }
             }
         }
-        else{
-        reponse+="Le vainqueur est :"+ joueurs[idVainqueur].toString();}
+
+        if (idVainqueur == vainqueurs[1]) { // Ex-aequo 1ere place enregistré toujours valable après parcours du score
+                                            // de tous les joueurs.
+            // Son ou ses informations extraites.
+            // Cette méthode couvre le cas (encore plus rare) d'un ex-aequo entre plus de 2
+            // joueurs.
+            reponse += "Ex aequo entre :" + joueurs[idVainqueur].toString() + " et ";
+            for (int i = 1; i < vainqueurs.length; i++) {
+                if (vainqueurs[i] != 0) {
+                    reponse += joueurs[vainqueurs[i]].toString() + ", ";
+                }
+            }
+        } else {
+            reponse += "Le vainqueur est :" + joueurs[idVainqueur].toString();
+        }
         return reponse;
     }
-
-
-
 
     // La méthode toString permet d’afficher à chaque tour de jeu l’état du plateau
     // et le joueur qui la main.
