@@ -9,7 +9,7 @@ public class Joueur {
     }
 
     public String toString() {
-        return ("Joueur: " + this.nom + '\n' + "Score: " + this.score+'\n');
+        return ("Joueur: " + this.nom + '\n' + "Score: " + this.score + '\n');
     }
 
     public int getScore() {
@@ -56,6 +56,7 @@ public class Joueur {
      */
     public int joue(Plateau p, MEE s, int[] nbPointsJet) {
         int resultat;
+        Ut.afficher(this.printChevalet());
         System.out.println("N pour passer, E pour échanger, P pour placer : ");
         char userInput = Ut.saisirCaractere();
         switch (userInput) {
@@ -76,10 +77,8 @@ public class Joueur {
                 }
                 break;
             default:
-                System.out.println("Merci de ressaisir un choix conforme.");
-                joue(p, s, nbPointsJet);
+                throw new IllegalStateException("Choix incorrect" + userInput);
         }
-
         return resultat;
     }
 
@@ -187,6 +186,18 @@ public class Joueur {
             this.chevalet.transfere(sac, index);
         }
 
+    }
+    public String printChevalet(){
+        String chevalet ="| ";
+        int[] obs = this.chevalet.getTabFreq();
+        for(int i=0;i<obs.length;i++){
+            if(obs[i]!=0){
+                for(int j=1;j<=obs[i];j++){
+                    chevalet+=Ut.indexToMaj(i)+"| ";
+                }
+            }
+        }
+        return(chevalet);
     }
 
 }

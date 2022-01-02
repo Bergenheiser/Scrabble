@@ -10,6 +10,7 @@ public class Scrabble {
         int[] sacStandard = { 9, 2, 2, 3, 15, 2, 2, 2, 8, 1, 1, 5, 3, 6, 6, 2, 1, 6, 6, 6, 6, 2, 1, 1, 1, 1 };
         this.plateau = new Plateau();
         this.sac = new MEE(sacStandard);
+        this.joueurs = new Joueur[listeJoueurs.length];
         for (int i = 0; i < listeJoueurs.length; i++) {
             this.joueurs[i] = new Joueur(listeJoueurs[i]);
             this.numJoueur = i;
@@ -21,7 +22,7 @@ public class Scrabble {
      * 1. la distribution initiale des jetons aux joueurs,
      * 2. des itérations sur les différents tours de jeu jusqu’à la fin de la
      * partie,
-     * 3. le calcul des scores finaux,
+     * // 3. le calcul des scores finaux,
      * 4. l’affichage du ou des gagnants.
      */
     public void partie() {
@@ -29,7 +30,7 @@ public class Scrabble {
         int passeMain = 0;
         this.numJoueur = Ut.randomMinMax(0, joueurs.length - 1);
         while (!conditionArret) {
-            this.toString();
+            Ut.afficher(this.toString());
             int retourAction = joueurs[this.numJoueur].joue(this.plateau, this.sac, this.nbPointsJet); // La méthode
                                                                                                        // joue, gère
                                                                                                        // aussi
@@ -123,7 +124,7 @@ public class Scrabble {
     // La méthode toString permet d’afficher à chaque tour de jeu l’état du plateau
     // et le joueur qui la main.
     public String toString() {
-        return (this.plateau.toString() + '\n' + "Le Joueur: " + joueurs[this.numJoueur] + " à la main!");
+        return (this.plateau.toString() + '\n' + joueurs[this.numJoueur].toString());
     }
 
 }

@@ -32,11 +32,9 @@ public class MEE {
      */
 
     public MEE(int[] tab) {
-
+        this(tab.length);
         for (int i = 0; i < tab.length; i++) {
-
             this.tabFreq[i] = tab[i];
-            
             if (tab[i] != 0) {
                 this.nbTotEx += tab[i];
             }
