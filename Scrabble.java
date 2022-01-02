@@ -30,16 +30,32 @@ public class Scrabble {
         this.numJoueur = Ut.randomMinMax(0, joueurs.length - 1);
         while (!conditionArret) {
             this.toString();
-            int retourAction = joueurs[this.numJoueur].joue(this.plateau, this.sac, this.nbPointsJet);
-            
+            int retourAction = joueurs[this.numJoueur].joue(this.plateau, this.sac, this.nbPointsJet); // La méthode
+                                                                                                       // joue, gère
+                                                                                                       // aussi
+                                                                                                       // l'incrémentation
+                                                                                                       // du score d'un
+                                                                                                       // joueur après
+                                                                                                       // chaque
+                                                                                                       // placementValide.
+
             if (retourAction == -1) {
-                //Le joueur à passé son tour
+                // Le joueur à passé son tour
                 passeMain++;
                 this.numJoueur++;
             } else {
                 if (retourAction == 1) {
-                    //le remplissage du chevalet était impossible après placement des jetons; le sac est maintenant vide.
+                    // le remplissage du chevalet était impossible après placement des jetons; le
+                    // sac est maintenant vide, ce joueur à gagné et récupère les points des jetons
+                    // restant sur le chevalet des autres joueurs.
                     conditionArret = true;
+                    int pointsRestantJ = 0;
+                    for (int i = 0; i < joueurs.length; i++) {
+                        // nbPointsChevalet vérifie bien que si le chevalet est vide, le score renvoyé
+                        // est 0.
+                        pointsRestantJ += joueurs[i].nbPointsChevalet(nbPointsJet);
+                    }
+                    joueurs[this.numJoueur].ajouteScore(pointsRestantJ);
 
                 } else {
                     this.numJoueur++;
@@ -48,8 +64,15 @@ public class Scrabble {
                 if (!conditionArret && this.numJoueur == joueurs.length - 1) {
                     if (passeMain == joueurs.length - 1) {
                         conditionArret = true;
+                        // Tous les joueurs ont passés leur tours, je leur retire du score les points
+                        // des jetons restant sur le chevalet.
+                        for (int i = 0; i < joueurs.length; i++) {
+                            int pointsRestant = joueurs[i].nbPointsChevalet(nbPointsJet);
+                            joueurs[i].ajouteScore(-(pointsRestant));
+                        }
                     } else {
-                        //Je réinitialise le joueur courant au premier joueur de la liste pour passer au tour suivant.
+                        // Je réinitialise le joueur courant au premier joueur de la liste pour passer
+                        // au tour suivant.
                         passeMain = 0;
                         this.numJoueur = 0;
                     }
@@ -58,12 +81,26 @@ public class Scrabble {
 
             }
         }
+        System.out.println(this.vainqueur());
     }
+
+    public String vainqueur(){
+        int idVainqueur=0;
+        for(int i = 1; i<(joueurs.length); i++){
+            if(joueurs[idVainqueur].getScore()<joueurs[i].getScore()){
+                idVainqueur=i;
+            }
+        }
+        return("Le vainqueur est :"+ joueurs[idVainqueur].toString());
+    }
+
+
+
 
     // La méthode toString permet d’afficher à chaque tour de jeu l’état du plateau
     // et le joueur qui la main.
     public String toString() {
-        return (this.plateau.toString()+'\n'+"Le Joueur: "+joueurs[this.numJoueur]+" à la main!");
+        return (this.plateau.toString() + '\n' + "Le Joueur: " + joueurs[this.numJoueur] + " à la main!");
     }
 
 }

@@ -39,7 +39,7 @@ public class Plateau {
         this.g = plateau;
     }
 
-    public String tostring() {
+    public String toString() {
         String plateauCourant = "   |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
                 + "-".repeat(64) + "\n";
         char col = 'A';
@@ -85,6 +85,7 @@ public class Plateau {
      * dans le sens à partir des jetons de e est valide.
      */
     public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
+        // conversion Entier Naturel Relatif aux coordonnées d'un plan.
         boolean result = false;
         int endZone; // Cordonnée X ou Y (selon le sens) de la dernière case de zone
         Case casePrecedenteZone;
@@ -181,7 +182,6 @@ public class Plateau {
                 result = true;
             } else {
                 result = false;
-                ;
             }
         }
         return result;
@@ -200,7 +200,7 @@ public class Plateau {
             case 'v':
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){ //Mot compte Double ou Triple
+                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){ //Mot compte Double Triple
                         switch (g[numCol][numLig].getCouleur()){
                             case 4:
                             sumPoints += nbPointsJet[indexPointsJet] * 1;

@@ -1,7 +1,7 @@
 public class Test {
     public static void main(String[] args) {
         Plateau test = new Plateau();
-        System.out.println(test.tostring());
+        System.out.println(test.toString());
         MEE chevalet = new MEE(26);
         Mot tester = new Mot();
         tester.ask();
@@ -13,9 +13,9 @@ public class Test {
             chevalet.ajoute(indexalphalettre);
 
         }
-        System.out.println(test.placementValide("PALU",8,4,'h', chevalet));
-        System.out.println(test.place("PALU", 8, 4, 'h',chevalet));
-        System.out.println(test.tostring());
+        System.out.println(test.placementValide("PALU",7,4,'h', chevalet));
+        System.out.println(test.place("PALU", 7,4, 'h',chevalet));
+        System.out.println(test.toString());
     }
     
 }
