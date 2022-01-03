@@ -288,5 +288,41 @@ public class Plateau {
         }
         return resultat;
     }
+    
+        // extension de mot qui touche,t
+public boolean touche (String mot, int numLig, int numCol, char sens){
+        int ligne=numLig;
+        int colonne=numCol;
+        String nv mot;
+        boolean test=true;
+        for(int i=0; i<mot.length; i++){
+            nvmot="";
+            if (sens=='v'){
+                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                    nvmot=this.g[ligne][colonne].lettre+nvmot;
+                    colonne=colonne-1;
+                }
+                colonne=numCol+1;
+                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                    nvmot=nvmot+this.g[ligne][colonne].lettre;
+                    colonne=colonne+1;
+                }//tester le mot
+                
+            }else{
+                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                    nvmot=this.g[ligne][colonne].lettre+nvmot;
+                    ligne=ligne-1;
+                }
+                ligne=numLig+1;
+                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                    nvmot=nvmot+this.g[ligne][colonne].lettre;
+                    ligne=ligne+1;
+                }//tester le mot
+            
+
+        }
+    }
+    return test;
+}
 
 }
