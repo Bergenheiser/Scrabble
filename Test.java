@@ -1,6 +1,6 @@
-/*public class Test {
+public class Test {
     public static void main(String[] args) {
-        Plateau test = new Plateau();
+        /* Plateau test = new Plateau();
         System.out.println(test.toString());
         MEE chevalet = new MEE(26);
         Mot tester = new Mot();
@@ -15,8 +15,10 @@
         }
         System.out.println(test.placementValide("PALU",7,4,'h', chevalet));
         System.out.println(test.place("PALU", 7,4, 'h',chevalet));
-        System.out.println(test.toString());
-    }
+        System.out.println(test.toString());*/
+        System.out.println(Ut.randomMinMax(0,25));
+    }}
     
-*/
+
+
 

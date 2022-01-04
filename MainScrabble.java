@@ -1,5 +1,5 @@
 public class MainScrabble {
-    public static void main(String[] args){
+    /*public static void main(String[] args){
 
         Ut.afficher("Saissisez le nombre de joeurs (2 à 4): ");
         int nbJoueurs=Ut.saisirEntier();
@@ -31,4 +31,4 @@ public class MainScrabble {
 
 
 
-    }
+    }*/

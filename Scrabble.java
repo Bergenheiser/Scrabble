@@ -2,7 +2,7 @@ public class Scrabble {
     private int[] nbPointsJet = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10,
             10, 10 };
     private Joueur[] joueurs;
-    private int numJoueur; // joueur courant (entre 0 et joueurs.length-1) //Je sais pas à quoi il sert
+    private int numJoueur; // joueur courant (entre 0 et joueurs.length-1)
     private Plateau plateau;
     private MEE sac;
 
@@ -22,7 +22,7 @@ public class Scrabble {
      * 1. la distribution initiale des jetons aux joueurs,
      * 2. des itérations sur les différents tours de jeu jusqu’à la fin de la
      * partie,
-     * // 3. le calcul des scores finaux,
+     * 3. le calcul des scores finaux,
      * 4. l’affichage du ou des gagnants.
      */
     public void partie() {
@@ -31,8 +31,10 @@ public class Scrabble {
         this.numJoueur = Ut.randomMinMax(0, joueurs.length - 1);
         // Distribution initiale des jetons
         for (int i = 0; i < joueurs.length; i++) {
+            while(joueurs[i].chevalet.getCardinal())
             joueurs[i].prendJetons(this.sac, 7);
         }
+
 
         // Début de la partie et itération des tours
         while (!conditionArret) {

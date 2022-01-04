@@ -60,7 +60,7 @@ public class Plateau {
     }
 
     public boolean dansChevalet(String mot, MEE e) {
-        int[] chevalet = e.getTabFreq();
+        int[] chevalet = e.copie();
         boolean result = true;
         int position = 0;
         while (result && position < mot.length()) {
@@ -68,6 +68,8 @@ public class Plateau {
             // chevalet à au moins 1 exemplaire
             if (chevalet[Ut.majToIndex(mot.charAt(position))] != 0) {
                 position++;
+                // Je soustrais la lettre observée afin de pouvoir revérifier la condition en cas de 2 lettres indentiques.
+                chevalet[Ut.majToIndex(mot.charAt(position))]+=-1;
             } else {
                 result = false;
             }
