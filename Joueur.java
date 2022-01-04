@@ -66,7 +66,6 @@ public class Joueur {
         char userInput = Ut.saisirCaractere();
         switch (userInput) {
             case 'N':
-                // Revenir dessus pour la structure du tour passé
                 resultat = -1;
                 break;
             case 'E':
