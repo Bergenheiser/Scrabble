@@ -9,6 +9,9 @@ public class Joueur {
         this.score= 0;
 
     }
+    public MEE getChevalet(){
+        return this.chevalet;
+    }
 
     public String toString() {
         return ("Joueur: " + this.nom + '\n' + "Score: " + this.score + '\n');
@@ -44,7 +47,7 @@ public class Joueur {
      * dans la limite de son contenu.
      */
     public void prendJetons(MEE s, int nbJetons) {
-        while 
+        
        s.transfereAleat(this.chevalet, 7);
     }
 
@@ -200,7 +203,7 @@ public class Joueur {
         int[] obs = this.chevalet.getTabFreq();
         for(int i=0;i<obs.length;i++){
             if(obs[i]!=0){
-                for(int j=1;j==obs[i];j++){
+                for(int j=1;j<=obs[i];j++){
                     chevalet+=Ut.indexToMaj(i)+" | ";
                 }
             }

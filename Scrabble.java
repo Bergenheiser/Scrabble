@@ -31,10 +31,9 @@ public class Scrabble {
         this.numJoueur = Ut.randomMinMax(0, joueurs.length - 1);
         // Distribution initiale des jetons
         for (int i = 0; i < joueurs.length; i++) {
-            while(joueurs[i].chevalet.getCardinal())
             joueurs[i].prendJetons(this.sac, 7);
-        }
-
+            System.out.println(joueurs[i].getChevalet().getCardinal());}
+        
 
         // Début de la partie et itération des tours
         while (!conditionArret) {
