@@ -44,7 +44,7 @@ public class MEE {
         for (int i = 0; i < tab.length; i++) {
             this.tabFreq[i] = tab[i];
             if (tab[i] != 0) {
-                this.nbTotEx++;
+                this.nbTotEx+=tab[i];
             }
         }
     }
@@ -143,10 +143,9 @@ public class MEE {
         int resultat=0;
         while(index<=k){
             choix=Ut.randomMinMax(0,(this.tabFreq.length-1));
-            
             if(this.transfere(e, choix)){
                 resultat++;
-            }else
+            }
             index++;
         }
         return(resultat);

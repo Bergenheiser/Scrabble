@@ -47,8 +47,7 @@ public class Joueur {
      * dans la limite de son contenu.
      */
     public void prendJetons(MEE s, int nbJetons) {
-        
-       s.transfereAleat(this.chevalet, 7);
+       s.transfereAleat(this.chevalet, nbJetons);
     }
 
     /**
