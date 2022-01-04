@@ -67,9 +67,9 @@ public class Plateau {
             // Si la lettre du mot saisi représentée par son indice dans le tabFreq du
             // chevalet à au moins 1 exemplaire
             if (chevalet[Ut.majToIndex(mot.charAt(position))] != 0) {
-                position++;
                 // Je soustrais la lettre observée afin de pouvoir revérifier la condition en cas de 2 lettres indentiques.
                 chevalet[Ut.majToIndex(mot.charAt(position))]+=-1;
+                position++;
             } else {
                 result = false;
             }
