@@ -1,6 +1,6 @@
 public class Scrabble {
-    private int[] nbPointsJet = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10,
-            10, 10 };
+    private int[] nbPointsJet = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 10, 1, 2, 1, 1, 3, 8, 1, 1, 1, 1, 4, 10, 10,
+            10, 10};
     private Joueur[] joueurs;
     private int numJoueur; // joueur courant (entre 0 et joueurs.length-1)
     private Plateau plateau;
@@ -27,18 +27,17 @@ public class Scrabble {
     public void partie() {
         boolean conditionArret = false;
         int passeMain = 0;
-        this.numJoueur = Ut.randomMinMax(0, joueurs.length - 1);
         // Distribution initiale des jetons
         for (int i = 0; i < joueurs.length; i++) {
             while (joueurs[i].getChevalet().getCardinal() < 7) {
                 joueurs[i].prendJetons(this.sac, 1);
             }
         }
-
+        this.numJoueur = Ut.randomMinMax(0, joueurs.length - 1);
+        while (!conditionArret) {
             // Début de la partie et itération des tours
-            while (!conditionArret) {
-                Ut.afficher(this.toString());
-                int retourAction = joueurs[this.numJoueur].joue(this.plateau, this.sac, this.nbPointsJet);
+            Ut.afficher(this.toString());
+            int retourAction = joueurs[this.numJoueur].joue(this.plateau, this.sac, this.nbPointsJet);
                 // La méthode
                 // joue, gère
                 // aussi
