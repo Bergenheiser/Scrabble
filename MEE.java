@@ -7,6 +7,14 @@ public class MEE {
     public int[] getTabFreq(){
         return this.tabFreq;
     }
+    public int[] copie(){
+        int[] destination = new int[this.tabFreq.length];
+        for(int i=0; i<this.tabFreq.length;i++){
+            destination[i]=this.tabFreq[i];
+        }
+        return(destination);
+    }
+
     public int getCardinal(){
         return this.nbTotEx;
     }
@@ -36,7 +44,7 @@ public class MEE {
         for (int i = 0; i < tab.length; i++) {
             this.tabFreq[i] = tab[i];
             if (tab[i] != 0) {
-                this.nbTotEx += tab[i];
+                this.nbTotEx+=tab[i];
             }
         }
     }
@@ -112,17 +120,13 @@ public class MEE {
      */
     public boolean transfere(MEE e, int i) {
            boolean resultat;
-
            if(this.tabFreq[i] > 0){
-
                this.retire(i);
                e.ajoute(i);  
                resultat=true;
-               
            }else {
                resultat=false;
                }
-
            return(resultat);
         }
 

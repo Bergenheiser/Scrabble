@@ -17,7 +17,6 @@ public class MainScrabble {
         //TO DO LIST :
         //Revoir pourquoi il n'y pas 7 jetons dans le sac à tout moment!!!
         //A faire :
-        // Créer CapeloDico
         // Empecher de placer un mot vide
         // Empecher de choisir numLig ou numCol invalide au placement du mot.
         // Comment changer de choix si on s'est trompé (passer de placer à Echanger par exemple)
