@@ -295,26 +295,35 @@ public boolean touche (String mot, int numLig, int numCol, char sens){
         int colonne=numCol;
         String nv mot;
         boolean test=true;
+    
         for(int i=0; i<mot.length; i++){
+            
             nvmot="";
+            
             if (sens=='v'){
-                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                
+                while (colonne >= 0 && estRecouverte (this.g[ligne][colonne])){
                     nvmot=this.g[ligne][colonne].lettre+nvmot;
                     colonne=colonne-1;
                 }
+                
                 colonne=numCol+1;
-                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                
+                while (colonne<this.g[ligne].length && estRecouverte (this.g[ligne][colonne])){
                     nvmot=nvmot+this.g[ligne][colonne].lettre;
                     colonne=colonne+1;
                 }//tester le mot
                 
             }else{
-                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                
+                while (ligne >= 0 && estRecouverte (this.g[ligne][colonne])){
                     nvmot=this.g[ligne][colonne].lettre+nvmot;
                     ligne=ligne-1;
                 }
+                
                 ligne=numLig+1;
-                while (estRecouverte (this.g[ligne][colonne])){// ajouter la verification qu'il ne sort pas de la grille
+                
+                while (ligne < this.g.legth && estRecouverte (this.g[ligne][colonne])){
                     nvmot=nvmot+this.g[ligne][colonne].lettre;
                     ligne=ligne+1;
                 }//tester le mot
