@@ -15,7 +15,7 @@ public class MainScrabble {
         LeJEUdeMORT.partie();
         
         //TO DO LIST :
-        //Revoir pourquoi il n'y pas 7 jetons dans le sac à tout moment!!!
+        //Soucis placementValide avec conversions de coordonées maintenant ...
         //A faire :
         // Empecher de placer un mot vide
         // Empecher de choisir numLig ou numCol invalide au placement du mot.

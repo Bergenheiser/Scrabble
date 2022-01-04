@@ -7,18 +7,19 @@ public class Mot {
     public void ask(){
         String input= Ut.saisirChaine();
         int i=0;
+        boolean standard2=true;
         boolean standard= capeloDico(input);
-        while(standard && i<input.length()){
-            standard= Ut.estUneMajuscule(input.charAt(i));
+        while(standard2 && i<input.length()){
+            standard2= Ut.estUneMajuscule(input.charAt(i));
             i++;
         }
-        if(standard){
+        if(standard && standard2){
             System.out.println("Mot enregistré avec succès!");
             this.submit = input;
         }
         else{
             System.out.println("Veuillez saisir un mot valide! (dans le dictionnaire et en toutes majuscules): ");
-            ask();}
+            ask();} 
     }
     /**
      * 

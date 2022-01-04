@@ -7,6 +7,9 @@ public class MEE {
     public int[] getTabFreq(){
         return this.tabFreq;
     }
+    public int getTabFreq(int i){
+        return this.tabFreq[i];
+    }
     public int[] copie(){
         int[] destination = new int[this.tabFreq.length];
         for(int i=0; i<this.tabFreq.length;i++){

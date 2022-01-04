@@ -6,10 +6,11 @@ public class Joueur {
     public Joueur(String unNom) {
         this.nom = unNom;
         this.chevalet = new MEE(26);
-        this.score= 0;
+        this.score = 0;
 
     }
-    public MEE getChevalet(){
+
+    public MEE getChevalet() {
         return this.chevalet;
     }
 
@@ -47,7 +48,7 @@ public class Joueur {
      * dans la limite de son contenu.
      */
     public void prendJetons(MEE s, int nbJetons) {
-       s.transfereAleat(this.chevalet, nbJetons);
+        s.transfereAleat(this.chevalet, nbJetons);
     }
 
     /**
@@ -72,15 +73,14 @@ public class Joueur {
                 resultat = 0;
                 break;
             case 'P':
+            // SOURCE DU PROBLEME PAR ICI
                 if(joueMot(p, s, nbPointsJet)){
-                if (this.chevalet.estVide()) {
+                    if (this.chevalet.estVide()) {
                     resultat = 1;
-                } else {
+                    } else {
                     resultat = 0;
                 }}
-                else{Ut.afficher("Placement invalide du Mot");
-                joueMot(p, s, nbPointsJet);
-                                            }
+                else{Ut.afficher("Placement invalide du Mot");}
                 break;
             default:
                 throw new IllegalStateException("Choix incorrect" + userInput);
@@ -108,9 +108,9 @@ public class Joueur {
         motIn.ask(); // CAPELODico au boulot!
         String mot = motIn.getMot();
         System.out.println("Veuillez Saisir le numéro de ligne de placement souhaité: ");
-        int numLig = Ut.saisirEntier() - 1;
+        int numLig = Ut.saisirEntier()-1;
         System.out.println("Maintenant, le numéro de Colonne de placement souhaité: ");
-        int numCol = Ut.saisirEntier() - 1;
+        int numCol = Ut.saisirEntier()-1;
         System.out.println("Et enfin, le sens de placement, v pour vertical, h pour horizontal");
         char sens = Ut.saisirCaractere();
         if (p.placementValide(mot, numLig, numCol, sens, this.chevalet)) {
@@ -196,18 +196,19 @@ public class Joueur {
         }
 
     }
-    public String printChevalet(){
-        String chevalet ="| ";
-        int[] obs = this.chevalet.getTabFreq();
-        for(int i=0;i<obs.length;i++){
-            if(obs[i]!=0){
-                for(int j=1;j<=obs[i];j++){
-                    chevalet+=Ut.indexToMaj(i)+" | ";
+
+    public String printChevalet() {
+        String out = "| ";
+        int[] obs = this.chevalet.copie();
+        for (int i = 0; i < obs.length; i++) {
+            if (obs[i] != 0) {
+                for (int j = 1; j <= obs[i]; j++) {
+                    out += Ut.indexToMaj(i) + " | ";
                 }
             }
         }
-        chevalet+='\n';
-        return(chevalet);
+        out += '\n';
+        return (out);
     }
 
 }
