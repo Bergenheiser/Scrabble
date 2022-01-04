@@ -33,6 +33,7 @@ public class Scrabble {
             while (joueurs[i].getChevalet().getCardinal() < 7) {
                 joueurs[i].prendJetons(this.sac, 1);
             }
+        }
 
             // Début de la partie et itération des tours
             while (!conditionArret) {
@@ -85,7 +86,7 @@ public class Scrabble {
                     }
                 }
             }
-        }
+        
 
         System.out.println(this.vainqueur());
 
