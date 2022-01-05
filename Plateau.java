@@ -40,11 +40,11 @@ public class Plateau {
     }
 
     public String toString() {
-        String plateauCourant = "   |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
+        String plateauCourant = "    |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
                 + "-".repeat(64) + "\n";
-        char col = 'A';
+        String[] col = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15" };
         for (int i = 0; i < g.length; i++) {
-            plateauCourant += (" " + col + " |");
+            plateauCourant += (" " + col[i] + " |");
             for (int j = 0; j < g[0].length; j++) {
                 if (g[i][j].getCouleur() == 1 && !g[i][j].estRecouverte()) {
                     plateauCourant += "   |";
@@ -54,7 +54,6 @@ public class Plateau {
             }
 
             plateauCourant += '\n' + "-".repeat(64) + '\n';
-            col++;
         }
         return (plateauCourant);
     }
@@ -67,8 +66,9 @@ public class Plateau {
             // Si la lettre du mot saisi représentée par son indice dans le tabFreq du
             // chevalet à au moins 1 exemplaire
             if (chevalet[Ut.majToIndex(mot.charAt(position))] != 0) {
-                // Je soustrais la lettre observée afin de pouvoir revérifier la condition en cas de 2 lettres indentiques.
-                chevalet[Ut.majToIndex(mot.charAt(position))]+=-1;
+                // Je soustrais la lettre observée afin de pouvoir revérifier la condition en
+                // cas de 2 lettres indentiques.
+                chevalet[Ut.majToIndex(mot.charAt(position))] += -1;
                 position++;
             } else {
                 result = false;
@@ -202,57 +202,56 @@ public class Plateau {
             case 'v':
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){ //Mot compte Double Triple
-                        switch (g[numCol][numLig].getCouleur()){
+                    if (g[numCol][numLig].getCouleur() == 4 || g[numCol][numLig].getCouleur() == 5) { // Mot compte
+                                                                                                      // Double Triple
+                        switch (g[numCol][numLig].getCouleur()) {
                             case 4:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 2;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
 
                             case 5:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 3;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
 
                         }
 
-                    }
-                    else
-                    {
-                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();} // Je multiplie la valeur
-                                                                                               // score de la lettre par
-                                                                                               // le code couleur de la
-                                                                                               // case sous-jacente.
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();
+                    } // Je multiplie la valeur
+                      // score de la lettre par
+                      // le code couleur de la
+                      // case sous-jacente.
                     numLig++;
                 }
                 break;
             case 'h':
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){
-                        switch (g[numCol][numLig].getCouleur()){
+                    if (g[numCol][numLig].getCouleur() == 4 || g[numCol][numLig].getCouleur() == 5) {
+                        switch (g[numCol][numLig].getCouleur()) {
                             case 4:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 2;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
 
                             case 5:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 3;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
 
                         }
 
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();
                     }
-                    else
-                    {
-                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();}
                     numCol++;
 
                 }
                 break;
         }
-        sumPoints = sumPoints *multiplicateurMot;
+        sumPoints = sumPoints * multiplicateurMot;
         return (sumPoints);
     }
 

@@ -73,7 +73,6 @@ public class Joueur {
                 resultat = 0;
                 break;
             case 'P':
-            // SOURCE DU PROBLEME PAR ICI
                 if(joueMot(p, s, nbPointsJet)){
                     if (this.chevalet.estVide()) {
                     resultat = 1;

@@ -38,7 +38,7 @@ public class Scrabble {
             // Début de la partie et itération des tours
             Ut.afficher(this.toString());
             int retourAction = joueurs[this.numJoueur].joue(this.plateau, this.sac, this.nbPointsJet);
-                // La méthode
+            // La méthode
                 // joue, gère
                 // aussi
                 // l'incrémentation
@@ -60,10 +60,10 @@ public class Scrabble {
                         }
                     }
                 }
-                if (retourAction == 1) {
+                if (retourAction == 1 && this.sac.estVide()) {
                     // le remplissage du chevalet était impossible après placement des jetons; le
                     // sac est maintenant vide, ce joueur à gagné et récupère les points des jetons
-                    // restant sur le chevalet des autres joueurs.
+                    // restant sur le chevalet des autres joueurs.     
                     conditionArret = true;
                     int pointsRestantJ = 0;
                     for (int j = 0; j < joueurs.length; j++) {
@@ -71,9 +71,8 @@ public class Scrabble {
                         // est 0.
                         pointsRestantJ += joueurs[j].nbPointsChevalet(nbPointsJet);
                     }
-                    joueurs[this.numJoueur].ajouteScore(pointsRestantJ);
-
-                }
+                    joueurs[this.numJoueur].ajouteScore(pointsRestantJ);}
+                
                 if (this.numJoueur == joueurs.length - 1 && !conditionArret) {
                     // Je réinitialise le joueur courant au premier joueur de la liste pour passer
                     // au tour suivant.
