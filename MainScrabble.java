@@ -20,7 +20,8 @@ public class MainScrabble {
         // Empecher de placer un mot vide
         // Empecher de choisir numLig ou numCol invalide au placement du mot.
         // Comment changer de choix si on s'est trompé (passer de placer à Echanger par exemple)
-
+        //Vérifier les conditions d'arrêt du jeu quand tous le sac est vide.
+        //Vérifier ce qu'il se passe quand le sac a moins de jetons que ce que le joeur aimerai piocher
         // 
 
 
