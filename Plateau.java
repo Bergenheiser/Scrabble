@@ -100,6 +100,8 @@ public class Plateau {
         int indexLettreObservée = 0;
         boolean conditionCaseCentrale = false;
         int caseCentralePresente = 0;
+        // Nous allons devoir déterminer les coordonnées de la fin du mot à partir de la prochaine case non recouverte ou nulle (bord de plateau)
+        boolean trueEndzone = false;
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
@@ -136,6 +138,14 @@ public class Plateau {
 
             case 'h':
                 // X de la dernière lettre du mot proposé
+               
+               
+                for(int k=numCol +mot.length()-1;k<=14;k++)
+
+
+
+
+
                 endZone = numCol + mot.length() - 1;
                 if (endZone + 1 > 14) {
                     caseSuivanteZone = null;
@@ -192,14 +202,21 @@ public class Plateau {
     /**
      * pré-requis : le placement de mot sur this à partir de la case
      * (numLig, numCol) dans le sens donné par sens est valide
-     * résultat : retourne le nombre de points rapportés par ce placement, le
+     * résultat : retourne le nombre de points rapportés par ce placement,soit le score du mot placé, ou le score de la concatenation du mot placé avec celui déjà présent, le
      * nombre de points de chaque jeton étant donné par le tableau nbPointsJet.
      */
     public int nbPointsPlacement(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
         int sumPoints = 0;
         int multiplicateurMot = 1;
+        
+        //Adaptation de la taille de mot (cas ou un mot serait placé en amont ou aval d'un mot déjà placé)
+        //Le score de son placement devra refleter la concacténation du placement et le mot déja présent.
+
+        int Endzone; ///Revenir ici
+
         switch (sens) {
             case 'v':
+                Endzone= numLig+ mot.length() - 1;
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
                     if (g[numCol][numLig].getCouleur() == 4 || g[numCol][numLig].getCouleur() == 5) { // Mot compte
