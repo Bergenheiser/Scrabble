@@ -19,7 +19,7 @@ public class MainScrabble {
         //A faire :
         // Empecher de placer un mot vide
         // Empecher de choisir numLig ou numCol invalide au placement du mot.
-        }
+        //Rajouter la concatenation des lettres pour le calcul du score placement dans le cas ou des mots se touchent.
 
 
 
