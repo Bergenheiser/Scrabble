@@ -116,7 +116,7 @@ public class Plateau {
                     casePrecedenteZone = g[numLig - 1][numCol];
                 }
                 if (endZone <= 14) {
-                    for (int i = numLig; i < endZone; i++) {
+                    for (int i = numLig; i <= endZone; i++) {
                         if (g[i][numCol].estRecouverte()
                                 && g[i][numCol].getLettre() == mot.charAt(indexLettreObservée)) {
                             nbcaseRemplie++;
@@ -151,7 +151,7 @@ public class Plateau {
                     casePrecedenteZone = g[numLig][numCol - 1];
                 }
                 if (endZone <= 14) {
-                    for (int j = numCol; j < endZone; j++) {
+                    for (int j = numCol; j <= endZone; j++) {
                         if (g[numLig][j].estRecouverte()
                                 && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { // contrainteIntegrite
                             nbcaseRemplie++;
