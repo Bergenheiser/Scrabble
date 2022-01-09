@@ -100,7 +100,8 @@ public class Plateau {
         int indexLettreObservée = 0;
         boolean conditionCaseCentrale = false;
         int caseCentralePresente = 0;
-        // Nous allons devoir déterminer les coordonnées de la fin du mot à partir de la prochaine case non recouverte ou nulle (bord de plateau)
+        // Nous allons devoir déterminer les coordonnées de la fin du mot à partir de la
+        // prochaine case non recouverte ou nulle (bord de plateau)
         boolean trueEndzone = false;
         switch (sens) {
             case 'v':
@@ -138,15 +139,10 @@ public class Plateau {
 
             case 'h':
                 // X de la dernière lettre du mot proposé
-               
-               
-                for(int k=numCol +mot.length()-1;k<=14;k++)
 
+                for (int k = numCol + mot.length() - 1; k <= 14; k++)
 
-
-
-
-                endZone = numCol + mot.length() - 1;
+                    endZone = numCol + mot.length() - 1;
                 if (endZone + 1 > 14) {
                     caseSuivanteZone = null;
                 } else {
@@ -202,26 +198,27 @@ public class Plateau {
     /**
      * pré-requis : le placement de mot sur this à partir de la case
      * (numLig, numCol) dans le sens donné par sens est valide
-     * résultat : retourne le nombre de points rapportés par ce placement,soit le score du mot placé, ou le score de la concatenation du mot placé avec celui déjà présent, le
+     * résultat : retourne le nombre de points rapportés par ce placement,soit le
+     * score du mot placé, ou le score de la concatenation du mot placé avec celui
+     * déjà présent, le
      * nombre de points de chaque jeton étant donné par le tableau nbPointsJet.
      */
     public int nbPointsPlacement(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
         int sumPoints = 0;
         int multiplicateurMot = 1;
-        
-        //Adaptation de la taille de mot (cas ou un mot serait placé en amont ou aval d'un mot déjà placé)
-        //Le score de son placement devra refleter la concacténation du placement et le mot déja présent.
-
-        int Endzone; ///Revenir ici
-
+        int endZone=0;
         switch (sens) {
             case 'v':
-                Endzone= numLig+ mot.length() - 1;
+                endZone = numLig + mot.length() - 1;
+                while (g[endZone + 1][numCol].estRecouverte()) {
+                    mot += g[endZone + 1][numCol].getLettre();
+                    endZone++;
+                }
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if (g[numCol][numLig].getCouleur() == 4 || g[numCol][numLig].getCouleur() == 5) { // Mot compte
+                    if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) { // Mot compte
                                                                                                       // Double Triple
-                        switch (g[numCol][numLig].getCouleur()) {
+                        switch (g[numLig][numCol].getCouleur()) {
                             case 4:
                                 sumPoints += nbPointsJet[indexPointsJet] * 1;
                                 multiplicateurMot = multiplicateurMot * 2;
@@ -235,19 +232,24 @@ public class Plateau {
                         }
 
                     } else {
-                        sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();
+                        sumPoints += nbPointsJet[indexPointsJet] * g[numLig][numCol].getCouleur();
                     } // Je multiplie la valeur
-                      // score de la lettre par
+                      // score de la lettre par 
                       // le code couleur de la
                       // case sous-jacente.
                     numLig++;
                 }
                 break;
             case 'h':
+                endZone = numCol + mot.length() - 1;
+                while (g[numLig][endZone+1].estRecouverte()) {
+                    mot += g[numLig][endZone+1].getLettre();
+                    endZone++;
+                }
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if (g[numCol][numLig].getCouleur() == 4 || g[numCol][numLig].getCouleur() == 5) {
-                        switch (g[numCol][numLig].getCouleur()) {
+                    if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) {
+                        switch (g[numLig][numCol].getCouleur()) {
                             case 4:
                                 sumPoints += nbPointsJet[indexPointsJet] * 1;
                                 multiplicateurMot = multiplicateurMot * 2;
@@ -261,7 +263,7 @@ public class Plateau {
                         }
 
                     } else {
-                        sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();
+                        sumPoints += nbPointsJet[indexPointsJet] * g[numLig][numCol].getCouleur();
                     }
                     numCol++;
 
