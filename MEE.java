@@ -138,22 +138,48 @@ public class MEE {
      * pré-requis : k >= 0
      * action : tranfère k exemplaires choisis aléatoirement de this vers e
      * dans la limite du contenu de this
+     * Le nombre aleatoire choisis en fonction du cardinal de this, pour respecter les probabilites de tirage d'un jeton.
      * résultat : le nombre d’exemplaires effectivement transférés
      */
     public int transfereAleat(MEE e, int k) {
         int index=1;
-        int choix;
+        int aleat;
+        int jetonAleat;
         int resultat=0;
+        
         while(index<=k){
-            choix=Ut.randomMinMax(0,(this.tabFreq.length-1));
-            if(this.transfere(e, choix)){
+            aleat=Ut.randomMinMax(0,(this.getCardinal()));
+            jetonAleat=nToIndice(aleat);
+            if(this.transfere(e, jetonAleat)){
                 resultat++;
             }
             index++;
         }
         return(resultat);
         }
+    /**
+     * retourne l'indice du nième élement de this
+     * composante essentielle de transfereAleat;
+     * exemple un sac de 100 jetons; selon les règles du Scrabble, le 11ème jeton est à l'indice 1 de son tabFreq associé (lettre B);
+    */
+    public int nToIndice(int n){
+        int reponse=0;
+        boolean trouve = false;
+        int k=0;
+        int indice=0;
+        while(!trouve){
+            k+=this.getTabFreq(indice);
+            if(n>k){
+                indice++;
+            }
+            else{
+                trouve=true;
+                reponse=indice;
+            }
+        }
+        return reponse;
 
+        }
     /**
      * pré-requis : tabFreq.length <= v.length
      * résultat : retourne la somme des valeurs des exemplaires des

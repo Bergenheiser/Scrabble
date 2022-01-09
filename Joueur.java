@@ -73,7 +73,6 @@ public class Joueur {
                 resultat = 0;
                 break;
             case 'P':
-            // SOURCE DU PROBLEME PAR ICI
                 if(joueMot(p, s, nbPointsJet)){
                     if (this.chevalet.estVide()) {
                     resultat = 1;
@@ -188,7 +187,7 @@ public class Joueur {
         for (int i = 0; i < ensJetons.length(); i++) {
             int index = Ut.majToIndex(ensJetons.charAt(i));
             // transfert d'un jeton aléatoire du sac vers le chevalet
-            sac.transfereAleat(this.chevalet, 1);
+            while(sac.getCardinal()>1 && sac.transfereAleat(this.chevalet, 1)<1);
             // transfert spécifique du jeton du chevalet vers le sac
             // Cet ordre à été choisi pour ne pas accidentellement retirer du sac la lettre
             // qu'on souhaite avoir échangé pour une autre

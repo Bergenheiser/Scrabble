@@ -40,11 +40,11 @@ public class Plateau {
     }
 
     public String toString() {
-        String plateauCourant = "   |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
+        String plateauCourant = "    |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
                 + "-".repeat(64) + "\n";
-        char col = 'A';
+        String[] col = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15" };
         for (int i = 0; i < g.length; i++) {
-            plateauCourant += (" " + col + " |");
+            plateauCourant += (" " + col[i] + " |");
             for (int j = 0; j < g[0].length; j++) {
                 if (g[i][j].getCouleur() == 1 && !g[i][j].estRecouverte()) {
                     plateauCourant += "   |";
@@ -54,7 +54,6 @@ public class Plateau {
             }
 
             plateauCourant += '\n' + "-".repeat(64) + '\n';
-            col++;
         }
         return (plateauCourant);
     }
@@ -67,8 +66,9 @@ public class Plateau {
             // Si la lettre du mot saisi représentée par son indice dans le tabFreq du
             // chevalet à au moins 1 exemplaire
             if (chevalet[Ut.majToIndex(mot.charAt(position))] != 0) {
-                // Je soustrais la lettre observée afin de pouvoir revérifier la condition en cas de 2 lettres indentiques.
-                chevalet[Ut.majToIndex(mot.charAt(position))]+=-1;
+                // Je soustrais la lettre observée afin de pouvoir revérifier la condition en
+                // cas de 2 lettres indentiques.
+                chevalet[Ut.majToIndex(mot.charAt(position))] += -1;
                 position++;
             } else {
                 result = false;
@@ -100,6 +100,8 @@ public class Plateau {
         int indexLettreObservée = 0;
         boolean conditionCaseCentrale = false;
         int caseCentralePresente = 0;
+        // Nous allons devoir déterminer les coordonnées de la fin du mot à partir de la
+        // prochaine case non recouverte ou nulle (bord de plateau)
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
@@ -111,7 +113,7 @@ public class Plateau {
                 if (endZone - 1 < 0) {
                     casePrecedenteZone = null;
                 } else {
-                    casePrecedenteZone = g[endZone - 1][numCol];
+                    casePrecedenteZone = g[numLig - 1][numCol];
                 }
                 if (endZone <= 14) {
                     for (int i = numLig; i <= endZone; i++) {
@@ -128,7 +130,7 @@ public class Plateau {
                     }
                 } else {
                     System.out.println("---Débordement de plateau---");
-                } // Retour utilisateur, préférable indexOutOfBound qui pourrait parraître être un
+                } // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être un
                   // problème de la méthode et pas de l'input.
                 break;
 
@@ -140,7 +142,7 @@ public class Plateau {
                 if (endZone + 1 > 14) {
                     caseSuivanteZone = null;
                 } else {
-                    caseSuivanteZone = g[numLig][numCol + 1];
+                    caseSuivanteZone = g[numLig][endZone + 1];
                 }
                 if (endZone - 1 < 0) {
                     casePrecedenteZone = null;
@@ -177,7 +179,7 @@ public class Plateau {
             result = true;
         } else {
             // Placement le reste du jeu
-            if (this.g[7][7].estRecouverte() && result == false && endZone <= 14 && endZone >= 0
+            if (this.g[7][7].estRecouverte() && !result && endZone <= 14 && endZone >= 0
                     && (casePrecedenteZone == null || !casePrecedenteZone.estRecouverte())
                     && (caseSuivanteZone == null || !caseSuivanteZone.estRecouverte())
                     && dansChevalet(mot, e) && contrainteIntegrite && conditionCaseVide && conditionCaseRemplie) {
@@ -192,67 +194,79 @@ public class Plateau {
     /**
      * pré-requis : le placement de mot sur this à partir de la case
      * (numLig, numCol) dans le sens donné par sens est valide
-     * résultat : retourne le nombre de points rapportés par ce placement, le
+     * résultat : retourne le nombre de points rapportés par ce placement,soit le
+     * score du mot placé, ou le score de la concatenation du mot placé avec celui
+     * déjà présent, le
      * nombre de points de chaque jeton étant donné par le tableau nbPointsJet.
      */
     public int nbPointsPlacement(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
         int sumPoints = 0;
         int multiplicateurMot = 1;
+        int endZone=0;
         switch (sens) {
             case 'v':
+                endZone = numLig + mot.length() - 1;
+                /*while (g[endZone + 1][numCol].estRecouverte()) {
+                    mot += g[endZone + 1][numCol].getLettre();
+                    endZone++;
+                }*/
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){ //Mot compte Double Triple
-                        switch (g[numCol][numLig].getCouleur()){
+                    if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) { // Mot compte
+                                                                                                      // Double Triple
+                        switch (g[numLig][numCol].getCouleur()) {
                             case 4:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 2;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
 
                             case 5:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 3;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
 
                         }
 
-                    }
-                    else
-                    {
-                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();} // Je multiplie la valeur
-                                                                                               // score de la lettre par
-                                                                                               // le code couleur de la
-                                                                                               // case sous-jacente.
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[numLig][numCol].getCouleur();
+                    } // Je multiplie la valeur
+                      // score de la lettre par 
+                      // le code couleur de la
+                      // case sous-jacente.
                     numLig++;
                 }
                 break;
             case 'h':
+                endZone = numCol + mot.length() - 1;
+                /*while (g[numLig][endZone+1].estRecouverte()) {
+                    mot += g[numLig][endZone+1].getLettre();
+                    endZone++;
+                }*/
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
-                    if(g[numCol][numLig].getCouleur()==4 || g[numCol][numLig].getCouleur()==5){
-                        switch (g[numCol][numLig].getCouleur()){
+                    if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) {
+                        switch (g[numLig][numCol].getCouleur()) {
                             case 4:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 2;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
 
                             case 5:
-                            sumPoints += nbPointsJet[indexPointsJet] * 1;
-                            multiplicateurMot = multiplicateurMot * 3;
-                            break;
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
 
                         }
 
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[numLig][numCol].getCouleur();
                     }
-                    else
-                    {
-                    sumPoints += nbPointsJet[indexPointsJet] * g[numCol][numLig].getCouleur();}
                     numCol++;
 
                 }
                 break;
         }
-        sumPoints = sumPoints *multiplicateurMot;
+        sumPoints = sumPoints * multiplicateurMot;
         return (sumPoints);
     }
 
