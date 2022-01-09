@@ -40,11 +40,11 @@ public class Plateau {
     }
 
     public String toString() {
-        String plateauCourant = "    |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
+        String plateauCourant = "  |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
                 + "-".repeat(64) + "\n";
-        String[] col = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15" };
+        char col = 'A';
         for (int i = 0; i < g.length; i++) {
-            plateauCourant += (" " + col[i] + " |");
+            plateauCourant += (col + " |");
             for (int j = 0; j < g[0].length; j++) {
                 if (g[i][j].getCouleur() == 1 && !g[i][j].estRecouverte()) {
                     plateauCourant += "   |";
@@ -52,7 +52,7 @@ public class Plateau {
                     plateauCourant += " " + g[i][j].toString() + " |";
                 }
             }
-
+            col++;
             plateauCourant += '\n' + "-".repeat(64) + '\n';
         }
         return (plateauCourant);
@@ -130,7 +130,8 @@ public class Plateau {
                     }
                 } else {
                     System.out.println("---Débordement de plateau---");
-                } // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être un
+                } // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être
+                  // un
                   // problème de la méthode et pas de l'input.
                 break;
 
@@ -202,14 +203,16 @@ public class Plateau {
     public int nbPointsPlacement(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
         int sumPoints = 0;
         int multiplicateurMot = 1;
-        int endZone=0;
+        int endZone = 0;
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
-                /*while (g[endZone + 1][numCol].estRecouverte()) {
-                    mot += g[endZone + 1][numCol].getLettre();
-                    endZone++;
-                }*/
+                /*
+                 * while (g[endZone + 1][numCol].estRecouverte()) {
+                 * mot += g[endZone + 1][numCol].getLettre();
+                 * endZone++;
+                 * }
+                 */
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
                     if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) { // Mot compte
@@ -230,7 +233,7 @@ public class Plateau {
                     } else {
                         sumPoints += nbPointsJet[indexPointsJet] * g[numLig][numCol].getCouleur();
                     } // Je multiplie la valeur
-                      // score de la lettre par 
+                      // score de la lettre par
                       // le code couleur de la
                       // case sous-jacente.
                     numLig++;
@@ -238,10 +241,12 @@ public class Plateau {
                 break;
             case 'h':
                 endZone = numCol + mot.length() - 1;
-                /*while (g[numLig][endZone+1].estRecouverte()) {
-                    mot += g[numLig][endZone+1].getLettre();
-                    endZone++;
-                }*/
+                /*
+                 * while (g[numLig][endZone+1].estRecouverte()) {
+                 * mot += g[numLig][endZone+1].getLettre();
+                 * endZone++;
+                 * }
+                 */
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
                     if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) {
@@ -304,8 +309,8 @@ public class Plateau {
         }
         return resultat;
     }
-    
-        // extension de mot qui touche,t
+
+    // extension de mot qui touche,t
 public boolean touche (String mot, int numLig, int numCol, char sens){
         int ligne=numLig;
         int colonne=numCol;
