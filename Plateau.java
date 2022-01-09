@@ -102,7 +102,6 @@ public class Plateau {
         int caseCentralePresente = 0;
         // Nous allons devoir déterminer les coordonnées de la fin du mot à partir de la
         // prochaine case non recouverte ou nulle (bord de plateau)
-        boolean trueEndzone = false;
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
