@@ -40,11 +40,11 @@ public class Plateau {
     }
 
     public String toString() {
-        String plateauCourant = "  |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
+        String plateauCourant = "    |01 |02 |03 |04 |05 |06 |07 |08 |09 |10 |11 |12 |13 |14 |15 |" + '\n'
                 + "-".repeat(64) + "\n";
-        char col = 'A';
+        String[] col = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15" };
         for (int i = 0; i < g.length; i++) {
-            plateauCourant += (col + " |");
+            plateauCourant += (" " + col[i] + " |");
             for (int j = 0; j < g[0].length; j++) {
                 if (g[i][j].getCouleur() == 1 && !g[i][j].estRecouverte()) {
                     plateauCourant += "   |";
@@ -52,7 +52,7 @@ public class Plateau {
                     plateauCourant += " " + g[i][j].toString() + " |";
                 }
             }
-            col++;
+
             plateauCourant += '\n' + "-".repeat(64) + '\n';
         }
         return (plateauCourant);
@@ -76,6 +76,66 @@ public class Plateau {
         }
         return result;
     }
+
+    // extension de mot qui touche
+    public boolean touche(String mot, int numLig, int numCol, char sens) {
+        int ligne = numLig, i = 0;
+        ;
+        int colonne = numCol;
+        String nvmot;
+        boolean test = true;
+        Mot nouveau;
+
+        while (i < mot.length() && test == true) {
+
+            nvmot = "";
+
+            if (sens == 'v') {
+
+                while (colonne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    colonne = colonne - 1;
+                }
+
+                colonne = numCol + 1;
+
+                while (colonne < this.g[ligne].length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + (this.g[ligne][colonne].getLettre());
+                    colonne = colonne + 1;
+                }
+
+                nouveau = new Mot(nvmot);
+
+                if (nvmot != "" && nouveau.capeloDico(nvmot)) {
+                    test = false;
+                }
+
+            } else {
+
+                while (ligne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    ligne = ligne - 1;
+                }
+
+                ligne = numLig + 1;
+
+                while (ligne < this.g.length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + this.g[ligne][colonne].getLettre();
+                    ligne = ligne + 1;
+                }
+
+                nouveau = new Mot(nvmot);
+
+                if (nvmot != "" && nouveau.capeloDico(nvmot)) {
+                    test = false;
+                }
+
+            }
+            i++;
+        }
+        return test;
+    }
+
     // REVOIR LA CONDITION DES JETONS DANS CHEVALETS MAIS NON DEJA PRESENTS SUR LE
     // PLATEAU
 
@@ -189,7 +249,115 @@ public class Plateau {
                 result = false;
             }
         }
+
+        if (touche(mot, numLig, numCol, sens) == false) {
+            result = false;
+        }
+
         return result;
+    }
+
+    // extension de mot qui touche
+    public int touchePoint(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
+        int ligne = numLig, i = 0;
+        ;
+        int colonne = numCol;
+        String nvmot;
+        boolean test = true;
+        int endZone, sumPoints = 0;
+        int multiplicateurMot = 1;
+        int totalPoints = 0;
+
+        while (i < mot.length() && test == true) {
+
+            nvmot = "";
+            sumPoints = 0;
+
+            if (sens == 'v') {
+
+                while (colonne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    colonne = colonne - 1;
+                }
+
+                colonne = numCol + 1;
+
+                while (colonne < this.g[ligne].length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + (this.g[ligne][colonne].getLettre());
+                    colonne = colonne + 1;
+                }
+
+                endZone = colonne + nvmot.length() - 1;
+
+                for (int p = 0; p < nvmot.length(); p++) {
+                    int indexPointsJet = Ut.majToIndex(nvmot.charAt(p));
+                    if (g[ligne][colonne].getCouleur() == 4 || g[ligne][colonne].getCouleur() == 5) {
+                        switch (g[ligne][colonne].getCouleur()) {
+                            case 4:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
+
+                            case 5:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
+
+                        }
+
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[ligne][colonne].getCouleur();
+                    }
+                    colonne++;
+
+                }
+
+            } else {
+
+                while (ligne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    ligne = ligne - 1;
+                }
+
+                ligne = numLig + 1;
+
+                while (ligne < this.g.length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + this.g[ligne][colonne].getLettre();
+                    ligne = ligne + 1;
+                }
+
+                endZone = ligne + nvmot.length() - 1;
+
+                for (int p = 0; p < nvmot.length(); p++) {
+                    int indexPointsJet = Ut.majToIndex(nvmot.charAt(p));
+                    if (g[ligne][colonne].getCouleur() == 4 || g[ligne][colonne].getCouleur() == 5) { // Mot compte
+                                                                                                      // Double Triple
+                        switch (g[ligne][colonne].getCouleur()) {
+                            case 4:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
+
+                            case 5:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
+
+                        }
+
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[ligne][colonne].getCouleur();
+                    }
+                    ligne++;
+                }
+
+            }
+
+            sumPoints = sumPoints * multiplicateurMot;
+            totalPoints = totalPoints + sumPoints;
+            i++;
+        }
+        return totalPoints;
     }
 
     /**
@@ -272,6 +440,7 @@ public class Plateau {
                 break;
         }
         sumPoints = sumPoints * multiplicateurMot;
+        sumPoints=sumPoints+touchePoint(mot, numLig, numCol, sens, nbPointsJet);
         return (sumPoints);
     }
 
@@ -309,50 +478,5 @@ public class Plateau {
         }
         return resultat;
     }
-
-    // extension de mot qui touche,t
-public boolean touche (String mot, int numLig, int numCol, char sens){
-        int ligne=numLig;
-        int colonne=numCol;
-        String nv mot;
-        boolean test=true;
-    
-        for(int i=0; i<mot.length; i++){
-            
-            nvmot="";
-            
-            if (sens=='v'){
-                
-                while (colonne >= 0 && estRecouverte (this.g[ligne][colonne])){
-                    nvmot=this.g[ligne][colonne].lettre+nvmot;
-                    colonne=colonne-1;
-                }
-                
-                colonne=numCol+1;
-                
-                while (colonne<this.g[ligne].length && estRecouverte (this.g[ligne][colonne])){
-                    nvmot=nvmot+this.g[ligne][colonne].lettre;
-                    colonne=colonne+1;
-                }//tester le mot
-                
-            }else{
-                
-                while (ligne >= 0 && estRecouverte (this.g[ligne][colonne])){
-                    nvmot=this.g[ligne][colonne].lettre+nvmot;
-                    ligne=ligne-1;
-                }
-                
-                ligne=numLig+1;
-                
-                while (ligne < this.g.legth && estRecouverte (this.g[ligne][colonne])){
-                    nvmot=nvmot+this.g[ligne][colonne].lettre;
-                    ligne=ligne+1;
-                }//tester le mot
-            
-
-        }
-    }
-    return test;
-}
 
 }
