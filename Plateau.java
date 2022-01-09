@@ -114,7 +114,7 @@ public class Plateau {
                 if (endZone - 1 < 0) {
                     casePrecedenteZone = null;
                 } else {
-                    casePrecedenteZone = g[endZone - 1][numCol];
+                    casePrecedenteZone = g[numLig - 1][numCol];
                 }
                 if (endZone <= 14) {
                     for (int i = numLig; i <= endZone; i++) {
@@ -131,7 +131,7 @@ public class Plateau {
                     }
                 } else {
                     System.out.println("---Débordement de plateau---");
-                } // Retour utilisateur, préférable indexOutOfBound qui pourrait parraître être un
+                } // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être un
                   // problème de la méthode et pas de l'input.
                 break;
 
@@ -139,14 +139,11 @@ public class Plateau {
 
             case 'h':
                 // X de la dernière lettre du mot proposé
-
-                for (int k = numCol + mot.length() - 1; k <= 14; k++)
-
-                    endZone = numCol + mot.length() - 1;
+                endZone = numCol + mot.length() - 1;
                 if (endZone + 1 > 14) {
                     caseSuivanteZone = null;
                 } else {
-                    caseSuivanteZone = g[numLig][numCol + 1];
+                    caseSuivanteZone = g[numLig][endZone + 1];
                 }
                 if (endZone - 1 < 0) {
                     casePrecedenteZone = null;
@@ -183,7 +180,7 @@ public class Plateau {
             result = true;
         } else {
             // Placement le reste du jeu
-            if (this.g[7][7].estRecouverte() && result == false && endZone <= 14 && endZone >= 0
+            if (this.g[7][7].estRecouverte() && !result && endZone <= 14 && endZone >= 0
                     && (casePrecedenteZone == null || !casePrecedenteZone.estRecouverte())
                     && (caseSuivanteZone == null || !caseSuivanteZone.estRecouverte())
                     && dansChevalet(mot, e) && contrainteIntegrite && conditionCaseVide && conditionCaseRemplie) {
@@ -210,10 +207,10 @@ public class Plateau {
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
-                while (g[endZone + 1][numCol].estRecouverte()) {
+                /*while (g[endZone + 1][numCol].estRecouverte()) {
                     mot += g[endZone + 1][numCol].getLettre();
                     endZone++;
-                }
+                }*/
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
                     if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) { // Mot compte
@@ -242,10 +239,10 @@ public class Plateau {
                 break;
             case 'h':
                 endZone = numCol + mot.length() - 1;
-                while (g[numLig][endZone+1].estRecouverte()) {
+                /*while (g[numLig][endZone+1].estRecouverte()) {
                     mot += g[numLig][endZone+1].getLettre();
                     endZone++;
-                }
+                }*/
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
                     if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) {
