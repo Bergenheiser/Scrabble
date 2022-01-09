@@ -11,8 +11,8 @@ public class MainScrabble {
             Ut.afficher("Nom J"+(i+1)+" :");
             listeJoueurs[i]=Ut.saisirChaine();
         }
-        Scrabble LeJEUdeMORT = new Scrabble(listeJoueurs);
-        LeJEUdeMORT.partie();
+        Scrabble  tastyScrabble = new Scrabble(listeJoueurs);
+        tastyScrabble.partie();
         
         //TO DO LIST :
 

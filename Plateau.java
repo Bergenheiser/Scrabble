@@ -153,7 +153,7 @@ public class Plateau {
                 if (endZone <= 14) {
                     for (int j = numCol; j <= endZone; j++) {
                         if (g[numLig][j].estRecouverte()
-                                && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { // contrainteIntegrite
+                                && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { 
                             nbcaseRemplie++;
                             indexLettreObservée++;
                         } else {
