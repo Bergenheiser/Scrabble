@@ -12,7 +12,7 @@ public class MainScrabble {
             listeJoueurs[i] = Ut.saisirChaine();
         }
 
-        listeJoueurs=listeJoueursRanges(listeJoueurs);
+        listeJoueurs=listeJoueursRanges(listeJoueurs);//ici on retrouve l'appel de l'extension concernant l'ordre tiré aléatoirement des joueurs
         Scrabble tastyScrabble = new Scrabble(listeJoueurs);
         tastyScrabble.partie();
 
@@ -23,8 +23,10 @@ public class MainScrabble {
         // Empecher de choisir numLig ou numCol invalide au placement du mot.
 
     }
+    /*voici la fonction qui pemet de tirer aléatoirement l'ordre des joueurs. Si ils tirent une lettre en début de l'alphabet ils commencent.
+    L'ordre se poursuit ensuite de la même facon*/
 
-    public static String[] listeJoueursRanges(String[] listeJoueurs) {
+    public static String[] listeJoueursRanges(String[] listeJoueurs) { 
         int[] listeTemoin = new int[listeJoueurs.length];
         int j;
         int stock;
@@ -60,6 +62,8 @@ public class MainScrabble {
 
         return listeJoueurs;
     }
+    
+    /*Cette fonction permet de continuer a tiré jusqu'a ce que tout le monde est une lettre différente.*/
 
     public static int[] retirage(int i, int[] listeTemoin, int[] sac) {
         listeTemoin[i] = Ut.randomMinMax(1, 100);
@@ -76,6 +80,7 @@ public class MainScrabble {
                 retirage(j, listeTemoin,sac);
                 test = false;
             }
+            j--;
         }
         if (test == false) {
             retirage(i, listeTemoin,sac);
