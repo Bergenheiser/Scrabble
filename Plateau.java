@@ -77,6 +77,69 @@ public class Plateau {
         return result;
     }
 
+
+    // extension de mot qui touche
+    public boolean touche(String mot, int numLig, int numCol, char sens) {
+        int ligne = numLig, i = 0;
+        ;
+        int colonne = numCol;
+        String nvmot;
+        boolean test = true;
+        Mot nouveau;
+
+        while (i < mot.length() && test == true) {
+
+            nvmot = "";
+
+            if (sens == 'v') {
+
+                while (colonne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    colonne = colonne - 1;
+                }
+
+                colonne = numCol + 1;
+
+                while (colonne < this.g[ligne].length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + (this.g[ligne][colonne].getLettre());
+                    colonne = colonne + 1;
+                }
+
+                nouveau = new Mot(nvmot);
+
+                if (nvmot != "" && nouveau.capeloDico(nvmot)) {
+                    test = false;
+                }
+
+            } else {
+
+                while (ligne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    ligne = ligne - 1;
+                }
+
+                ligne = numLig + 1;
+
+                while (ligne < this.g.length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + this.g[ligne][colonne].getLettre();
+                    ligne = ligne + 1;
+                }
+
+                nouveau = new Mot(nvmot);
+
+                if (nvmot != "" && nouveau.capeloDico(nvmot)) {
+                    test = false;
+                }
+
+            }
+            i++;
+        }
+        return test;
+    }
+
+    // REVOIR LA CONDITION DES JETONS DANS CHEVALETS MAIS NON DEJA PRESENTS SUR LE
+    // PLATEAU
+
     /*
      * Méthode de Classe permettant de placer un mot sur le plateau
      * 
@@ -196,7 +259,115 @@ public class Plateau {
                 result = false;
             }
         }
+
+        if (touche(mot, numLig, numCol, sens) == false) {
+            result = false;
+        }
+
         return result;
+    }
+
+    // extension de mot qui touche
+    public int touchePoint(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
+        int ligne = numLig, i = 0;
+        ;
+        int colonne = numCol;
+        String nvmot;
+        boolean test = true;
+        int endZone, sumPoints = 0;
+        int multiplicateurMot = 1;
+        int totalPoints = 0;
+
+        while (i < mot.length() && test == true) {
+
+            nvmot = "";
+            sumPoints = 0;
+
+            if (sens == 'v') {
+
+                while (colonne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    colonne = colonne - 1;
+                }
+
+                colonne = numCol + 1;
+
+                while (colonne < this.g[ligne].length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + (this.g[ligne][colonne].getLettre());
+                    colonne = colonne + 1;
+                }
+
+                endZone = colonne + nvmot.length() - 1;
+
+                for (int p = 0; p < nvmot.length(); p++) {
+                    int indexPointsJet = Ut.majToIndex(nvmot.charAt(p));
+                    if (g[ligne][colonne].getCouleur() == 4 || g[ligne][colonne].getCouleur() == 5) {
+                        switch (g[ligne][colonne].getCouleur()) {
+                            case 4:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
+
+                            case 5:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
+
+                        }
+
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[ligne][colonne].getCouleur();
+                    }
+                    colonne++;
+
+                }
+
+            } else {
+
+                while (ligne >= 0 && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = this.g[ligne][colonne].getLettre() + nvmot;
+                    ligne = ligne - 1;
+                }
+
+                ligne = numLig + 1;
+
+                while (ligne < this.g.length && this.g[ligne][colonne].estRecouverte()) {
+                    nvmot = nvmot + this.g[ligne][colonne].getLettre();
+                    ligne = ligne + 1;
+                }
+
+                endZone = ligne + nvmot.length() - 1;
+
+                for (int p = 0; p < nvmot.length(); p++) {
+                    int indexPointsJet = Ut.majToIndex(nvmot.charAt(p));
+                    if (g[ligne][colonne].getCouleur() == 4 || g[ligne][colonne].getCouleur() == 5) { // Mot compte
+                                                                                                      // Double Triple
+                        switch (g[ligne][colonne].getCouleur()) {
+                            case 4:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 2;
+                                break;
+
+                            case 5:
+                                sumPoints += nbPointsJet[indexPointsJet] * 1;
+                                multiplicateurMot = multiplicateurMot * 3;
+                                break;
+
+                        }
+
+                    } else {
+                        sumPoints += nbPointsJet[indexPointsJet] * g[ligne][colonne].getCouleur();
+                    }
+                    ligne++;
+                }
+
+            }
+
+            sumPoints = sumPoints * multiplicateurMot;
+            totalPoints = totalPoints + sumPoints;
+            i++;
+        }
+        return totalPoints;
     }
 
     /**
@@ -279,6 +450,7 @@ public class Plateau {
                 break;
         }
         sumPoints = sumPoints * multiplicateurMot;
+        sumPoints=sumPoints+touchePoint(mot, numLig, numCol, sens, nbPointsJet);
         return (sumPoints);
     }
 
