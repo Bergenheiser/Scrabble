@@ -76,8 +76,6 @@ public class Plateau {
         }
         return result;
     }
-    // REVOIR LA CONDITION DES JETONS DANS CHEVALETS MAIS NON DEJA PRESENTS SUR LE
-    // PLATEAU
 
     /*
      * Méthode de Classe permettant de placer un mot sur le plateau
@@ -88,6 +86,7 @@ public class Plateau {
      */
     public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
         // conversion Entier Naturel Relatif aux coordonnées d'un plan.
+
         boolean result = false;
         int endZone; // Cordonnée X ou Y (selon le sens) de la dernière case de zone
         Case casePrecedenteZone;
@@ -96,8 +95,8 @@ public class Plateau {
         int nbCaseVide = 0;
         boolean conditionCaseRemplie = false;
         int nbcaseRemplie = 0;
-        boolean contrainteIntegrite = false;
-        int indexLettreObservée = 0;
+        boolean contrainteIntegrite = true;
+        int indexlettreobs = 0;
         boolean conditionCaseCentrale = false;
         int caseCentralePresente = 0;
         // Nous allons devoir déterminer les coordonnées de la fin du mot à partir de la
@@ -110,29 +109,34 @@ public class Plateau {
                 } else {
                     caseSuivanteZone = g[endZone + 1][numCol];
                 }
+
                 if (endZone - 1 < 0) {
                     casePrecedenteZone = null;
                 } else {
                     casePrecedenteZone = g[numLig - 1][numCol];
                 }
+
                 if (endZone <= 14) {
                     for (int i = numLig; i <= endZone; i++) {
-                        if (g[i][numCol].estRecouverte()
-                                && g[i][numCol].getLettre() == mot.charAt(indexLettreObservée)) {
+                        if (g[i][numCol].estRecouverte()) {
                             nbcaseRemplie++;
-                            indexLettreObservée++;
+                            if (g[i][numCol].getLettre() != mot.charAt(indexlettreobs)) {
+                                contrainteIntegrite = false;
+                            }
                         } else {
                             nbCaseVide++;
                         }
                         if (g[i][numCol] == g[7][7]) {
                             caseCentralePresente++;
                         }
+                        indexlettreobs++;
                     }
                 } else {
                     System.out.println("---Débordement de plateau---");
-                } // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être
-                  // un
-                  // problème de la méthode et pas de l'input.
+                }
+
+                // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être
+                // un problème de la méthode et pas de l'input.
                 break;
 
             // Sur un mot vertical les Coordonées Y (numCol) de ses lettres sont identiques.
@@ -151,17 +155,19 @@ public class Plateau {
                     casePrecedenteZone = g[numLig][numCol - 1];
                 }
                 if (endZone <= 14) {
-                    for (int j = numCol; j <= endZone; j++) {
-                        if (g[numLig][j].estRecouverte()
-                                && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { 
+                    for (int i = numCol; i <= endZone; i++) {
+                        if (g[numLig][i].estRecouverte()) {
                             nbcaseRemplie++;
-                            indexLettreObservée++;
+                            if (g[numLig][i].getLettre() != mot.charAt(indexlettreobs)) {
+                                contrainteIntegrite = false;
+                            }
                         } else {
                             nbCaseVide++;
                         }
-                        if (g[numLig][j] == g[7][7]) {
+                        if (g[numLig][i] == g[7][7]) {
                             caseCentralePresente++;
                         }
+                        indexlettreobs++;
                     }
                 } else {
                     System.out.println("---Débordement de plateau---");
@@ -170,17 +176,18 @@ public class Plateau {
             default:
                 throw new IllegalStateException("Sens incorrect" + sens);
         }
+
         conditionCaseCentrale = (caseCentralePresente > 0);
         conditionCaseRemplie = (nbcaseRemplie > 0);
-        contrainteIntegrite = conditionCaseRemplie; // cf. l.148
         conditionCaseVide = (nbCaseVide > 0);
-
+       
         // Premier placement
         if (!this.g[7][7].estRecouverte() && mot.length() >= 2 && dansChevalet(mot, e) && conditionCaseCentrale) {
             result = true;
         } else {
             // Placement le reste du jeu
-            if (this.g[7][7].estRecouverte() && !result && endZone <= 14 && endZone >= 0
+            if (this.g[7][7].estRecouverte()
+                    && !result
                     && (casePrecedenteZone == null || !casePrecedenteZone.estRecouverte())
                     && (caseSuivanteZone == null || !caseSuivanteZone.estRecouverte())
                     && dansChevalet(mot, e) && contrainteIntegrite && conditionCaseVide && conditionCaseRemplie) {
