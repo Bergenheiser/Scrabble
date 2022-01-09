@@ -26,7 +26,8 @@ public class MainScrabble {
 
     public static String[] listeJoueursRanges(String[] listeJoueurs) {
         int[] listeTemoin = new int[listeJoueurs.length];
-        int j, stock;
+        int j;
+        int stock;
         int[] sacStandard = { 9, 2, 2, 3, 15, 2, 2, 2, 8, 1, 1, 5, 3, 6, 6, 2, 1, 6, 6, 6, 6, 2, 1, 1, 1, 1 };
         boolean test = true;
         String joueur;
