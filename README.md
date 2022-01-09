@@ -1,4 +1,4 @@
-# SAE 1.06 Scrabble 
+# SAE 1.01 Scrabble 
 
 ![*Dimitri Copley - Pauline Carle*](https://4.bp.blogspot.com/-NdUJtp-e1PY/UlFjJSZ_BjI/AAAAAAAAaA0/8cEJSo9eqCA/s1600/scrabble+wallpapers.jpg)
 # Fichiers à télécharger
@@ -13,7 +13,7 @@
 ## DLC Proposées
  * Repérage des cases du plateau (3.2)
  * Détermination du joueur qui commence (3.4)
- * Prise en compte des jetons qui "touchent" le mot transversalement
+ * Prise en compte des jetons qui "touchent" le mot transversalement (3.5)
 
 ## Pour jouer
 
