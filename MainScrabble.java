@@ -65,7 +65,7 @@ public class MainScrabble {
         listeTemoin[i] = Ut.randomMinMax(1, 100);
         int k = 0, cardinal = sac[k];
 
-        while (listeTemoin[i] < cardinal) {
+        while (listeTemoin[i] > cardinal) {
             k++;
             cardinal = cardinal + sac[k];
         }
