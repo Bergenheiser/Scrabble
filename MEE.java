@@ -148,7 +148,7 @@ public class MEE {
         int resultat=0;
         
         while(index<=k){
-            aleat=Ut.randomMinMax(0,(this.getCardinal()));
+            aleat=Ut.randomMinMax(1,(this.getCardinal()));
             jetonAleat=nToIndice(aleat);
             if(this.transfere(e, jetonAleat)){
                 resultat++;
@@ -163,7 +163,6 @@ public class MEE {
      * exemple un sac de 100 jetons; selon les règles du Scrabble, le 11ème jeton est à l'indice 1 de son tabFreq associé (lettre B);
     */
     public int nToIndice(int n){
-        int reponse=0;
         boolean trouve = false;
         int k=0;
         int indice=0;
@@ -174,10 +173,9 @@ public class MEE {
             }
             else{
                 trouve=true;
-                reponse=indice;
             }
         }
-        return reponse;
+        return indice;
 
         }
     /**

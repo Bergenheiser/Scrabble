@@ -116,7 +116,7 @@ public class Plateau {
                     casePrecedenteZone = g[numLig - 1][numCol];
                 }
                 if (endZone <= 14) {
-                    for (int i = numLig; i <= endZone; i++) {
+                    for (int i = numLig; i < endZone; i++) {
                         if (g[i][numCol].estRecouverte()
                                 && g[i][numCol].getLettre() == mot.charAt(indexLettreObservée)) {
                             nbcaseRemplie++;
@@ -130,11 +130,12 @@ public class Plateau {
                     }
                 } else {
                     System.out.println("---Débordement de plateau---");
-                } // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être un
+                } // Retour utilisateur, préférable à indexOutOfBound qui pourrait parraître être
+                  // un
                   // problème de la méthode et pas de l'input.
                 break;
 
-            // Sur un mot vertical les Coordonées X (numCol) de ses lettres sont identiques.
+            // Sur un mot vertical les Coordonées Y (numCol) de ses lettres sont identiques.
 
             case 'h':
                 // X de la dernière lettre du mot proposé
@@ -150,7 +151,7 @@ public class Plateau {
                     casePrecedenteZone = g[numLig][numCol - 1];
                 }
                 if (endZone <= 14) {
-                    for (int j = numCol; j <= endZone; j++) {
+                    for (int j = numCol; j < endZone; j++) {
                         if (g[numLig][j].estRecouverte()
                                 && g[numLig][j].getLettre() == mot.charAt(indexLettreObservée)) { // contrainteIntegrite
                             nbcaseRemplie++;
@@ -202,14 +203,16 @@ public class Plateau {
     public int nbPointsPlacement(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
         int sumPoints = 0;
         int multiplicateurMot = 1;
-        int endZone=0;
+        int endZone = 0;
         switch (sens) {
             case 'v':
                 endZone = numLig + mot.length() - 1;
-                /*while (g[endZone + 1][numCol].estRecouverte()) {
-                    mot += g[endZone + 1][numCol].getLettre();
-                    endZone++;
-                }*/
+                /*
+                 * while (g[endZone + 1][numCol].estRecouverte()) {
+                 * mot += g[endZone + 1][numCol].getLettre();
+                 * endZone++;
+                 * }
+                 */
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
                     if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) { // Mot compte
@@ -230,7 +233,7 @@ public class Plateau {
                     } else {
                         sumPoints += nbPointsJet[indexPointsJet] * g[numLig][numCol].getCouleur();
                     } // Je multiplie la valeur
-                      // score de la lettre par 
+                      // score de la lettre par
                       // le code couleur de la
                       // case sous-jacente.
                     numLig++;
@@ -238,10 +241,12 @@ public class Plateau {
                 break;
             case 'h':
                 endZone = numCol + mot.length() - 1;
-                /*while (g[numLig][endZone+1].estRecouverte()) {
-                    mot += g[numLig][endZone+1].getLettre();
-                    endZone++;
-                }*/
+                /*
+                 * while (g[numLig][endZone+1].estRecouverte()) {
+                 * mot += g[numLig][endZone+1].getLettre();
+                 * endZone++;
+                 * }
+                 */
                 for (int i = 0; i < mot.length(); i++) {
                     int indexPointsJet = Ut.majToIndex(mot.charAt(i));
                     if (g[numLig][numCol].getCouleur() == 4 || g[numLig][numCol].getCouleur() == 5) {
