@@ -135,7 +135,7 @@ public class Plateau {
                   // problème de la méthode et pas de l'input.
                 break;
 
-            // Sur un mot vertical les Coordonées X (numCol) de ses lettres sont identiques.
+            // Sur un mot vertical les Coordonées Y (numCol) de ses lettres sont identiques.
 
             case 'h':
                 // X de la dernière lettre du mot proposé
