@@ -12,7 +12,7 @@ public class MainScrabble {
             listeJoueurs[i] = Ut.saisirChaine();
         }
 
-        listeJoueursRanges(listeJoueurs);
+        listeJoueurs=listeJoueursRanges(listeJoueurs);
         Scrabble tastyScrabble = new Scrabble(listeJoueurs);
         tastyScrabble.partie();
 
