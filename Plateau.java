@@ -78,7 +78,7 @@ public class Plateau {
     }
 
 
-    // extension de mot qui touche
+    /* extension de mot qui touche ici on vérifie que les mots qui sont créé sont bien valide.*/
     public boolean touche(String mot, int numLig, int numCol, char sens) {
         int ligne = numLig, i = 0;
         ;
@@ -267,7 +267,8 @@ public class Plateau {
         return result;
     }
 
-    // extension de mot qui touche
+    /* extension de mot qui touche. Ici, on compte les points des mots qui ont été précédemment vérifié*/
+    
     public int touchePoint(String mot, int numLig, int numCol, char sens, int[] nbPointsJet) {
         int ligne = numLig, i = 0;
         ;
